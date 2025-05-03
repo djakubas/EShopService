@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>API Test Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    input, button {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      max-width: 300px;
+    }
+    .section {
+      margin-bottom: 1.5rem;
+    }
+    #output {
+      margin-top: 1rem;
+      white-space: pre-wrap;
+      background: #f0f0f0;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>API Tester</h2>
+
+  <div class="section">
+    <label>API Base URL:</label><br/>
+    <input type="text" id="baseUrl" value="https://localhost:7257/" />
+  </div>
+
+  <div class="section">
+    <label>Username:</label><br/>
+    <input type="text" id="username" /><br/>
+    <label>Password:</label><br/>
+    <input type="password" id="password" /><br/>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div class="section">
+    <button onclick="testEndpoint('Client')">Test /Client</button>
+    <button onclick="testEndpoint('Employee')">Test /Employee</button>
+    <button onclick="testEndpoint('Admin')">Test /Admin</button>
+  </div>
+
+  <div id="output">Status: Not logged in.</div>
+
+  <script>
+    async function login() {
+      const baseUrl = document.getElementById('baseUrl').value;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch(`${baseUrl}Login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        if (response.ok && data.token) {
+          localStorage.setItem('jwtToken', data.token);
+          document.getElementById('output').textContent = 'Login succeeded. JWT stored.';
+        } else {
+          document.getElementById('output').textContent = 'Login failed: ' + (data.message || 'Invalid credentials');
+        }
+      } catch (error) {
+        document.getElementById('output').textContent = 'Error: ' + error.message;
+      }
+    }
+
+    async function testEndpoint(role) {
+      const baseUrl = document.getElementById('baseUrl').value;
+      const token = localStorage.getItem('jwtToken');
+
+      if (!token) {
+        document.getElementById('output').textContent = 'Error: No token found. Please login first.';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${baseUrl}${role}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.text();
+          document.getElementById('output').textContent = `Success on /${role}: ` + data;
+        } else {
+          const errorText = await response.text();
+          document.getElementById('output').textContent = `Unauthorized or error on /${role}: ${response.status} - ${errorText}`;
+        }
+      } catch (error) {
+        document.getElementById('output').textContent = 'Error: ' + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
