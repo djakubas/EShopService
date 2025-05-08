@@ -7,21 +7,22 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-//using Microsoft.Identity.Client;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 using User.Domain;
 using User.Domain.Models;
-
+using UserService;
+using System.IdentityModel.Tokens.Jwt;
+using System;
 namespace UserServiceIntegrationTests
 {
-    public class UserServiceIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+    public class UserServiceIntegrationTests : IClassFixture<WebApplicationFactory<UserService.Program>>
     {
 
         private readonly HttpClient _httpClient;
-        private WebApplicationFactory<Program> _applicationFactory;
+        private WebApplicationFactory<UserService.Program> _applicationFactory;
 
-        public UserServiceIntegrationTests(WebApplicationFactory<Program> applicationFactory)
+        public UserServiceIntegrationTests(WebApplicationFactory<UserService.Program> applicationFactory)
         {
             _applicationFactory = applicationFactory;
             //_applicationFactory = applicationFactory.WithWebHostBuilder(builder =>
@@ -45,14 +46,26 @@ namespace UserServiceIntegrationTests
         [Fact]
         public async Task LoginService_LoginAdminOk_ShouldReturnJWTToken_ShouldAllowAdminAccess()
         {
+            //login
             var body = new LoginRequest
             {
                 Username = "Admin",
-                Password = "test"
+                Password = "test" //correct password
             };
+            var bodyJson = JsonContent.Create(body);
+            var result = await _httpClient.PostAsync("/Login",bodyJson);
+            result.EnsureSuccessStatusCode();
+            var token = await result.Content.ReadFromJsonAsync<JwtTokenResponse>();
+            Assert.NotNull(token);
+            Assert.NotNull(token.Token);
 
-            var token = await _httpClient.PostAsJsonAsync("/Login", body);
-            Assert.NotNull(token); 
+            //get Admin page
+            var request = new HttpRequestMessage(HttpMethod.Get, "/Admin");
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
+
+            var adminPageResult = await _httpClient.SendAsync(request);
+            adminPageResult.EnsureSuccessStatusCode();
+
         }
          
 
