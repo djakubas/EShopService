@@ -22,7 +22,12 @@
     <ProjectReference Include="..\User.Domain\User.Domain.csproj" />
     <ProjectReference Include="..\UserService\UserService.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<AssemblyAttribute Include="Xunit.CollectionBehaviorAttribute">
+			<_Parameter1>DisableTestParallelization = true</_Parameter1>
+			<_Parameter1_IsLiteral>true</_Parameter1_IsLiteral>
+		</AssemblyAttribute>
+	</ItemGroup>
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>

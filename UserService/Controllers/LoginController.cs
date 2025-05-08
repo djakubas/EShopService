@@ -37,9 +37,16 @@ namespace UserService.Controllers
             }
         }
 
+        [HttpPost]
+        //[EnableCors("allowLocalOrigin")]
+        public async Task<IActionResult> Register([FromBody] User.Domain.Models.LoginRequest loginRequest)
+        {
+            return Ok("to do register service");    
+        }
+        
         [HttpGet]
         [Authorize]
-        [Authorize(Policy = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [Route("/Admin")]
         public IActionResult AdminPage()
         {
@@ -48,8 +55,7 @@ namespace UserService.Controllers
         
         [HttpGet]
         [Authorize]
-        [Authorize(Policy = "Administrator")]
-        [Authorize(Policy = "Employee")]
+        [Authorize(Roles = "Administrator,Employee")]
         [Route("/Employee")]
         public IActionResult EmployeePage()
         {
@@ -58,9 +64,7 @@ namespace UserService.Controllers
         
         [HttpGet]
         [Authorize]
-        [Authorize(Policy = "Administrator")]
-        [Authorize(Policy = "Employee")]
-        [Authorize(Policy = "Client")]
+        [Authorize(Roles = "Administrator,Employee,Client")]
         [Route("/Client")]
         public IActionResult ClientPage()
         {

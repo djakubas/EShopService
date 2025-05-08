@@ -37,6 +37,8 @@ namespace UserServiceIntegrationTests
             //        services.AddDbContext<DbContext>(options => options.UseInMemoryDatabase("TestDB"));
             //    });
             //});
+
+            //seed DB here if needed
             
             _httpClient = _applicationFactory.CreateClient();
 
@@ -44,7 +46,7 @@ namespace UserServiceIntegrationTests
         }
 
         [Fact]
-        public async Task LoginService_LoginAdminOk_ShouldReturnJWTToken_ShouldAllowAdminAccess()
+        public async Task LoginService_LoginAdminOk_ShouldReturnJWTToken_ShouldAllowAllAccess()
         {
             //login
             var body = new LoginRequest
@@ -53,22 +55,27 @@ namespace UserServiceIntegrationTests
                 Password = "test" //correct password
             };
             var bodyJson = JsonContent.Create(body);
-            var result = await _httpClient.PostAsync("/Login",bodyJson);
+            var result = await _httpClient.PostAsync("/Login", bodyJson);
             result.EnsureSuccessStatusCode();
             var token = await result.Content.ReadFromJsonAsync<JwtTokenResponse>();
             Assert.NotNull(token);
             Assert.NotNull(token.Token);
 
-            //get Admin page
-            var request = new HttpRequestMessage(HttpMethod.Get, "/Admin");
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
+            string[] endpoints = { "/Admin", "/Employee", "/Client" };
 
-            var adminPageResult = await _httpClient.SendAsync(request);
-            adminPageResult.EnsureSuccessStatusCode();
-
+            
+            foreach (var endpoint in endpoints)
+            {
+                using var request = new HttpRequestMessage(HttpMethod.Get, endpoint);
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
+                
+                var pageResult = await _httpClient.SendAsync(request);
+                
+                pageResult.EnsureSuccessStatusCode();
+            }
         }
-         
-
+        
+               
         //public void LoginService_LoginClientOk_ShouldreturnJWTToken_ShouldForbidAdminAccess()
         //{
 
