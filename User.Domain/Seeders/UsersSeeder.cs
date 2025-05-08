@@ -20,15 +20,15 @@ namespace User.Domain.Seeders
                 {
                     new UserModel
                     {
-                        Login = "Admin", HashPassword = hasher.HashPassword(null, "test") , Role = "Administrator"
+                        UserName = "Admin", PasswordHash = hasher.HashPassword(null, "test") , Role = "Administrator"
                     },
                     new UserModel
                     {
-                        Login = "Employee", HashPassword = hasher.HashPassword(null, "test") , Role = "Employee"
+                        UserName = "Employee", PasswordHash = hasher.HashPassword(null, "test") , Role = "Employee"
                     },
                     new UserModel
                     {
-                        Login = "Client", HashPassword = hasher.HashPassword(null, "test") , Role = "Client"
+                        UserName = "Client", PasswordHash = hasher.HashPassword(null, "test") , Role = "Client"
                     }
                 };
 

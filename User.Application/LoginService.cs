@@ -25,12 +25,12 @@ namespace User.Application
 
         public async Task<string> Login(string login, string password)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Login == login);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName== login);
             if (user != null)
             {
 
                 var hasher = new PasswordHasher<UserModel>();
-                var result = hasher.VerifyHashedPassword(user, user.HashPassword, password);
+                var result = hasher.VerifyHashedPassword(user, user.PasswordHash!, password);
 
                 if (result == PasswordVerificationResult.Success)
                 {

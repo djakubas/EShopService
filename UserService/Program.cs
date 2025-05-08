@@ -46,15 +46,14 @@ namespace UserService
                 options.AddPolicy("Employee", policy => policy.RequireRole("Employee"));
                 options.AddPolicy("Client", policy => policy.RequireRole("Client"));
             });
-            
+            //
             //for testing purposes
-            builder.Services.AddCors(options => options.AddPolicy("allowedOrigins", policy => 
+            builder.Services.AddCors(options => options.AddPolicy("allowAnyOriginAnyHeaderAnyMethod", policy => 
                 {
-                    policy.WithOrigins("file:///C:/Users/new.MSI/source/repos/EShopService/testUsers.html") // Whitelist your domain here
+                    policy.AllowAnyOrigin()
                           .AllowAnyHeader()
-                          .AllowAnyMethod()
-                          .AllowAnyOrigin()
-                          .AllowCredentials(); ;
+                          .AllowAnyMethod();
+                          
                           
                 })
             );
@@ -77,6 +76,7 @@ namespace UserService
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseCors("allowAnyOriginAnyHeaderAnyMethod");
             }
 
             using (var scope = app.Services.CreateScope())

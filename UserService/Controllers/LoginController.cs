@@ -23,7 +23,7 @@ namespace UserService.Controllers
         }
 
         [HttpPost]
-        [EnableCors("allowedOrigins")]
+        //[EnableCors("allowLocalOrigin")]
         public async Task<IActionResult> Login([FromBody] User.Domain.Models.LoginRequest loginRequest)
         {
             try
@@ -48,6 +48,7 @@ namespace UserService.Controllers
         
         [HttpGet]
         [Authorize]
+        [Authorize(Policy = "Administrator")]
         [Authorize(Policy = "Employee")]
         [Route("/Employee")]
         public IActionResult EmployeePage()
@@ -57,8 +58,9 @@ namespace UserService.Controllers
         
         [HttpGet]
         [Authorize]
+        [Authorize(Policy = "Administrator")]
+        [Authorize(Policy = "Employee")]
         [Authorize(Policy = "Client")]
-
         [Route("/Client")]
         public IActionResult ClientPage()
         {
