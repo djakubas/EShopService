@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using User.Domain.Models;
-using User.Application;
 using User.Domain.Seeders;
 using User.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using User.Application.Services;
+using User.Application.Interfaces;
 
 
 namespace UserService

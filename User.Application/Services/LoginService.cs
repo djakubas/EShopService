@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using User.Domain.Exceptions;
-using User.Application;
 using User.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using User.Domain.Models;
+using User.Application.Interfaces;
 
-namespace User.Application
+namespace User.Application.Services
 {
     public class LoginService : ILoginService
     {
@@ -25,7 +25,7 @@ namespace User.Application
 
         public async Task<string> Login(string login, string password)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName== login);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == login);
             if (user != null)
             {
 
@@ -49,8 +49,5 @@ namespace User.Application
         }
     }
 
-    public interface ILoginService
-    {
-        Task<string> Login(string username, string password);
-    }
+
 }

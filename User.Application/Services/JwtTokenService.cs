@@ -4,8 +4,10 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using User.Domain.Models;
+using User.Infrastructure;
+using User.Application.Interfaces;
 
-namespace User.Application
+namespace User.Application.Services
 {
     public class JwtTokenService : IJwtTokenService
     {
@@ -36,12 +38,7 @@ namespace User.Application
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-            
-        }
-    }
 
-    public interface IJwtTokenService
-    {
-        string GenerateToken(int userId, List<string> roles);
+        }
     }
 }
