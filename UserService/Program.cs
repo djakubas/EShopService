@@ -7,6 +7,7 @@ using User.Application;
 using User.Domain.Seeders;
 using User.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace UserService
@@ -34,7 +35,7 @@ namespace UserService
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtConfig.Issuer,
+                    ValidIssuer = jwtConfig!.Issuer,
                     ValidAudience = jwtConfig.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key))
                 };
@@ -48,20 +49,31 @@ namespace UserService
             });
             //
             //for testing purposes
-            builder.Services.AddCors(options => options.AddPolicy("allowAnyOriginAnyHeaderAnyMethod", policy => 
+            builder.Services.AddCors(options => options.AddPolicy("allowAnyOriginAnyHeaderAnyMethod", policy =>
                 {
                     policy.AllowAnyOrigin()
                           .AllowAnyHeader()
                           .AllowAnyMethod();
-                          
-                          
+
+
                 })
             );
+
             builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+            builder.Services.AddScoped<IRegisterService, RegisterService>();
             builder.Services.AddScoped<ILoginService, LoginService>();
             builder.Services.AddScoped<IUsersSeeder, UsersSeeder>();
+            
             builder.Services.AddDbContext<UsersDataContext>(options => options.UseInMemoryDatabase("TestDB"));
+            
+            //builder.Services.AddScoped<IPasswordValidator<UserModel>, PasswordValidator<UserModel>>();
+            builder.Services.AddSingleton<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
 
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 4;
+            });
 
             builder.Services.AddControllers();
 

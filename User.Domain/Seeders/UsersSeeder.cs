@@ -9,26 +9,25 @@ using User.Domain.Repositories;
 
 namespace User.Domain.Seeders
 {
-    public class UsersSeeder(UsersDataContext _context) : IUsersSeeder
+    public class UsersSeeder(UsersDataContext _context, IPasswordHasher<UserModel> _passwordHasher) : IUsersSeeder
     {
         public async Task Seed()
         {
             if (!_context.Users.Any())
             {
-                var hasher = new PasswordHasher<UserModel>();
                 var users = new List<UserModel>
                 {
                     new UserModel
                     {
-                        UserName = "Admin", PasswordHash = hasher.HashPassword(null, "test") , Role = "Administrator"
+                        UserName = "Admin", PasswordHash = _passwordHasher.HashPassword(null!, "test") , Role = "Administrator"
                     },
                     new UserModel
                     {
-                        UserName = "Employee", PasswordHash = hasher.HashPassword(null, "test") , Role = "Employee"
+                        UserName = "Employee", PasswordHash = _passwordHasher.HashPassword(null!, "test") , Role = "Employee"
                     },
                     new UserModel
                     {
-                        UserName = "Client", PasswordHash = hasher.HashPassword(null, "test") , Role = "Client"
+                        UserName = "Client", PasswordHash = _passwordHasher.HashPassword(null!, "test") , Role = "Client"
                     }
                 };
 

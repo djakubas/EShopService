@@ -15,6 +15,7 @@ namespace UserService.Controllers
     {
         private readonly ILogger<LoginController> _logger;
         protected ILoginService _loginService;
+        
 
         public LoginController(ILogger<LoginController> logger, ILoginService loginService)
         {
@@ -35,13 +36,6 @@ namespace UserService.Controllers
             {
                 return Unauthorized(e.Message); 
             }
-        }
-
-        [HttpPost]
-        //[EnableCors("allowLocalOrigin")]
-        public async Task<IActionResult> Register([FromBody] User.Domain.Models.LoginRequest loginRequest)
-        {
-            return Ok("to do register service");    
         }
         
         [HttpGet]

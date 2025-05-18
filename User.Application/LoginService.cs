@@ -15,12 +15,14 @@ namespace User.Application
 {
     public class LoginService : ILoginService
     {
-        protected IJwtTokenService _jwtTokenService;
-        protected readonly UsersDataContext _context;
-        public LoginService(IJwtTokenService jwtTokenService, UsersDataContext context)
+        private readonly IJwtTokenService _jwtTokenService;
+        private readonly UsersDataContext _context;
+        private readonly IPasswordHasher<UserModel> _passwordHasher;
+        public LoginService(IJwtTokenService jwtTokenService, UsersDataContext context, IPasswordHasher<UserModel> passwordHasher)
         {
             _jwtTokenService = jwtTokenService;
             _context = context;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<string> Login(string login, string password)
@@ -29,8 +31,7 @@ namespace User.Application
             if (user != null)
             {
 
-                var hasher = new PasswordHasher<UserModel>();
-                var result = hasher.VerifyHashedPassword(user, user.PasswordHash!, password);
+                var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash!, password);
 
                 if (result == PasswordVerificationResult.Success)
                 {
