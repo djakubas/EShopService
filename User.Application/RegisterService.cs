@@ -7,40 +7,53 @@ using System.Threading.Tasks;
 using User.Domain.Repositories;
 using User.Domain.Models;
 using User.Domain.Exceptions;
+using Microsoft.IdentityModel.Tokens;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace User.Application
 {
     public class RegisterService : IRegisterService
     {
-        private readonly UsersDataContext _context;
+        private readonly IUsersRepository _usersRepository;
         private readonly IPasswordHasher<UserModel> _passwordHasher;
-        private readonly IPasswordValidator<UserModel> _passwordValidator;
-        public RegisterService(UsersDataContext context, IPasswordHasher<UserModel> passwordHasher, IPasswordValidator<UserModel> passwordValidator)
+        private readonly IPasswordValidateService _passwordValidator;
+        private readonly IUniqueUserValidateService _uniqueUserValidateService;
+        public RegisterService(
+            IUsersRepository usersRepository, 
+            IPasswordHasher<UserModel> passwordHasher, 
+            IPasswordValidateService passwordValidator,
+            IUniqueUserValidateService uniqueUserValidateService)
         {
-            _context = context;
+            _usersRepository = usersRepository;
             _passwordHasher = passwordHasher;
             _passwordValidator = passwordValidator;
+            _uniqueUserValidateService = uniqueUserValidateService;
         }
         public async Task RegisterAsync(string username, string password)
         {
-            
-            //todo: Unique username validation
+            var uniqueUserResult = await _uniqueUserValidateService.CheckUniqueUsername(username);
+            if (!uniqueUserResult)
+            {
+                throw new UserAlreadyExistsException();
+            }
             var user = new UserModel()
             {
                 UserName = username,
                 Role = "Client"
             };
-            var pwdValidationResult = await _passwordValidator.ValidateAsync(null!, user, password);
-            if (!pwdValidationResult.Succeeded)
+            var pwdValidationErrors = _passwordValidator.ValidatePassword(password);
+            if (pwdValidationErrors.IsNullOrEmpty())
             {
-                //todo: I could add specific errors to the exception
-                throw new PasswordValidationException();
+                
+                var hashedPassword = _passwordHasher.HashPassword(user, password);
+                user.PasswordHash = hashedPassword;
+                
+                await _usersRepository.AddAsync(user);
             }
-            var hashedPassword = _passwordHasher.HashPassword(user, password);
-            user.PasswordHash = hashedPassword;
-
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            else
+            {
+                throw new PasswordValidationException(string.Join("\n", pwdValidationErrors));
+            }            
         }
     }
 

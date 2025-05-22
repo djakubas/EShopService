@@ -41,6 +41,7 @@
     <label>Password:</label><br/>
     <input type="password" id="password" /><br/>
     <button onclick="login()">Login</button>
+    <button onclick="register()">Register</button>
   </div>
 
   <div class="section">
@@ -70,6 +71,29 @@
           document.getElementById('output').textContent = 'Login succeeded. JWT stored.';
         } else {
           document.getElementById('output').textContent = 'Login failed: ' + (data.message || 'Invalid credentials');
+        }
+      } catch (error) {
+        document.getElementById('output').textContent = 'Error: ' + error.message;
+      }
+    }
+
+    async function register() {
+      const baseUrl = document.getElementById('baseUrl').value;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch(`${baseUrl}Register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          document.getElementById('output').textContent = 'Registration succeeded.';
+        } else {
+          document.getElementById('output').textContent = 'Registration failed: ' + (data.message || 'Unknown error');
         }
       } catch (error) {
         document.getElementById('output').textContent = 'Error: ' + error.message;

@@ -14,7 +14,7 @@ namespace UserService.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ILogger<LoginController> _logger;
-        protected ILoginService _loginService;
+        private protected ILoginService _loginService;
         
 
         public LoginController(ILogger<LoginController> logger, ILoginService loginService)
@@ -34,7 +34,7 @@ namespace UserService.Controllers
             }
             catch (InvalidCredentialsException e)
             {
-                return Unauthorized(e.Message); 
+                return Unauthorized(new { message = e.Message }); 
             }
         }
         
@@ -44,7 +44,7 @@ namespace UserService.Controllers
         [Route("/Admin")]
         public IActionResult AdminPage()
         {
-            return Ok("Admin Data - Admin only");
+            return Ok(new { message = "Admin Data - Admin only" });
         }
         
         [HttpGet]
@@ -53,7 +53,7 @@ namespace UserService.Controllers
         [Route("/Employee")]
         public IActionResult EmployeePage()
         {
-            return Ok("Employee Data - Admin and Employee");
+            return Ok(new { message = "Employee Data - Admin and Employee" } );
         }
         
         [HttpGet]
@@ -62,7 +62,7 @@ namespace UserService.Controllers
         [Route("/Client")]
         public IActionResult ClientPage()
         {
-            return Ok("Client Data - Admin, Employee and Client");
+            return Ok(new { message = "Client Data - Admin, Employee and Client" });
         }
     }
 }

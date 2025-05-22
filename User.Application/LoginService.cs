@@ -16,18 +16,18 @@ namespace User.Application
     public class LoginService : ILoginService
     {
         private readonly IJwtTokenService _jwtTokenService;
-        private readonly UsersDataContext _context;
+        private readonly IUsersRepository _usersRepository;
         private readonly IPasswordHasher<UserModel> _passwordHasher;
-        public LoginService(IJwtTokenService jwtTokenService, UsersDataContext context, IPasswordHasher<UserModel> passwordHasher)
+        public LoginService(IJwtTokenService jwtTokenService, IUsersRepository usersRepository, IPasswordHasher<UserModel> passwordHasher)
         {
             _jwtTokenService = jwtTokenService;
-            _context = context;
+            _usersRepository = usersRepository;
             _passwordHasher = passwordHasher;
         }
 
         public async Task<string> Login(string login, string password)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName== login);
+            var user = await _usersRepository.GetUserAsync(login);
             if (user != null)
             {
 
@@ -49,7 +49,6 @@ namespace User.Application
             }
         }
     }
-
     public interface ILoginService
     {
         Task<string> Login(string username, string password);

@@ -10,5 +10,6 @@ namespace User.Domain.Exceptions
     {
         public PasswordValidationException() : base("Password does not meet requirments") { }
         public PasswordValidationException(Exception innerException) : base("Password does not meet requirments", innerException) { }
+        public PasswordValidationException(string message) : base(message) { }
     }
 }

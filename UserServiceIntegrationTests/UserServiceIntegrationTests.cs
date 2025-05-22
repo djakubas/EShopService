@@ -74,11 +74,24 @@ namespace UserServiceIntegrationTests
                 pageResult.EnsureSuccessStatusCode();
             }
         }
-        
-               
-        //public void LoginService_LoginClientOk_ShouldreturnJWTToken_ShouldForbidAdminAccess()
-        //{
 
-        //}
+        [Fact]
+        public async Task RegisterService_ShouldCreateUser_ReturnSuccess_ShouldLoginNewUser_ReturnToken()
+        {
+            var body = new LoginRequest
+            {
+                Username = "newUser",
+                Password = "test1" //password meets requirements 
+            };
+            var bodyJson = JsonContent.Create(body);
+            var result = await _httpClient.PostAsync("/Register", bodyJson);
+            result.EnsureSuccessStatusCode();
+
+            var resultLogin = await _httpClient.PostAsync("/Login", bodyJson);
+            resultLogin.EnsureSuccessStatusCode();
+            var token = await resultLogin.Content.ReadFromJsonAsync<JwtTokenResponse>(); 
+            Assert.NotNull(token);
+            Assert.NotNull(token.Token);
+        }
     }
 }

@@ -23,11 +23,15 @@ namespace UserService.Controllers
             try
             {
                 await _registerService.RegisterAsync(loginRequest.Username,loginRequest.Password);
-                return Ok("User Registered");
+                return Ok(new { message = "User Registered" });
             }
             catch (PasswordValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new { message = e.Message });
+            }
+            catch(UserAlreadyExistsException e)
+            {
+                return BadRequest(new { message = e.Message });
             }
             
         }
