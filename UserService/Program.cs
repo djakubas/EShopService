@@ -8,6 +8,7 @@ using User.Domain.Seeders;
 using User.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography;
 
 
 namespace UserService
@@ -27,16 +28,21 @@ namespace UserService
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                var jwtConfig = jwtSettings.Get<JwtSettings>();
+
+                var rsa = RSA.Create();
+                
+                rsa.ImportFromPem(File.ReadAllText("../data/publickey.pem"));
+                var publicKey = new RsaSecurityKey(rsa);
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtConfig!.Issuer,
-                    ValidAudience = jwtConfig.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key))
+                    ValidIssuer = "UserService",
+                    ValidAudience = "Eshop",
+                    IssuerSigningKey = publicKey
                 };
             });
             builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
@@ -100,21 +106,17 @@ namespace UserService
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 app.UseCors("allowAnyOriginAnyHeaderAnyMethod");
-            }
-
-            using (var scope = app.Services.CreateScope())
+                using (var scope = app.Services.CreateScope())
                 {
                     var seeder = scope.ServiceProvider.GetRequiredService<IUsersSeeder>();
                     await seeder.Seed();
                 }
+            }
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
 
             app.MapControllers();
 

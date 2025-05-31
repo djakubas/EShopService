@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using EShop.Application;
-using EShopService.Models;
+using EShop.Domain.Models;
+
 namespace EShopService.Controllers
 {
     [Route("api/[controller]")]

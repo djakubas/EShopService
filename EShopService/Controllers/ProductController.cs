@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using EShopService.Models;
+using EShop.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +12,8 @@ namespace EShopService.Controllers
     {
         // GET: api/<ProductController>
         [HttpGet]
+        //[Authorize]
+        [Authorize(Roles = "Administrator,Employee,Client")]
         public IEnumerable<Product> Get()
         {
             return Enumerable.Range(1, 5).Select(id => new Product
@@ -23,6 +26,7 @@ namespace EShopService.Controllers
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Administrator,Employee,Client")]
         public Product Get(int id)
         {
             return new Product
