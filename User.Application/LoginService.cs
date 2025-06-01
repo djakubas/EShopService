@@ -37,8 +37,8 @@ namespace User.Application
                 {
                     var roles = new List<string>();
                     roles.Add(user.Role);
-
-                    var token = _jwtTokenService.GenerateToken(111, roles);
+                    
+                    var token = _jwtTokenService.GenerateToken(user.Id, roles);
                     return token;
                 }
                 throw new InvalidCredentialsException();

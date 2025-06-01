@@ -48,8 +48,9 @@
   <button onclick="testEndpoint('Client')">Test /Client</button>
   <button onclick="testEndpoint('Employee')">Test /Employee</button>
   <button onclick="testEndpoint('Admin')">Test /Admin</button>
-  <button onclick="testEndpoint('Product')">Test /Product</button>
-  <button onclick="testEndpoint('Product/1')">Test /Product/1</button>
+  <button onclick="testEndpoint('api/Product')">Test api/Product</button>
+  <button onclick="testEndpoint('api/Product/1')">Test api/Product/1</button>
+  <button onclick="testEndpoint('Me')">Test /Me</button>
 </div>
 
   <div id="output">Status: Not logged in.</div>

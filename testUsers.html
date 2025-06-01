@@ -42,14 +42,18 @@
     <input type="password" id="password" /><br/>
     <button onclick="login()">Login</button>
     <button onclick="register()">Register</button>
+
   </div>
 
 <div class="section">
+<button onclick="testEndpoint('Me')">Test /Me</button>
   <button onclick="testEndpoint('Client')">Test /Client</button>
+
   <button onclick="testEndpoint('Employee')">Test /Employee</button>
   <button onclick="testEndpoint('Admin')">Test /Admin</button>
   <button onclick="testEndpoint('api/Product')">Test api/Product</button>
   <button onclick="testEndpoint('api/Product/1')">Test api/Product/1</button>
+  
 </div>
 
   <div id="output">Status: Not logged in.</div>

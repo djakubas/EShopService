@@ -19,7 +19,7 @@ namespace User.Domain.Repositories
         {
             return await _context.Users.ToListAsync();
         }
-        public async Task<UserModel> GetUserAsync(int id)
+        public async Task<UserModel> GetUserAsync(Guid id)
         {
             var user = await _context.Users.Where(u => u.Id == id.ToString()).FirstOrDefaultAsync();
             return user!;
@@ -55,7 +55,7 @@ namespace User.Domain.Repositories
     public interface IUsersRepository
     {
         public Task<IEnumerable<UserModel>> GetAllAsync();
-        public Task<UserModel> GetUserAsync(int id);
+        public Task<UserModel> GetUserAsync(Guid id);
         public Task<UserModel> GetUserAsync(string username);
         public Task<UserModel> AddAsync(UserModel user);
         public Task<UserModel> UpdateAsync(UserModel user);

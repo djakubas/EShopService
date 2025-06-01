@@ -9,6 +9,8 @@ using User.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Cryptography;
+using User.Application.AutoMappers;
+using AutoMapper;
 
 
 namespace UserService
@@ -76,13 +78,16 @@ namespace UserService
                 options.Password.RequireUppercase = identityOptions.Password.RequireUppercase;
                 options.Password.RequireLowercase = identityOptions.Password.RequireLowercase;
             });
-            
+
+
+
             //Register and login services
             builder.Services.AddScoped<IRegisterService, RegisterService>();
             builder.Services.AddScoped<ILoginService, LoginService>();
             builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
             builder.Services.AddScoped<IPasswordValidateService, PasswordValidateService>();
             builder.Services.AddScoped<IUniqueUserValidateService, UniqueUserValidateService>();
+            builder.Services.AddAutoMapper(typeof(UserMappingProfile), typeof(UserUpdateMappingProfile));
 
             //Seeder
             builder.Services.AddScoped<IUsersSeeder, UsersSeeder>();

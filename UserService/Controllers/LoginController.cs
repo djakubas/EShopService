@@ -37,6 +37,8 @@ namespace UserService.Controllers
                 return Unauthorized(new { message = e.Message }); 
             }
         }
+
+
         
         [HttpGet]
         [Authorize]

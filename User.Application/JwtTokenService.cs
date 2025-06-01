@@ -5,6 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using User.Domain.Models;
 using System.Security.Cryptography;
+using System.Globalization;
+using System.Security.Authentication;
+using User.Domain.Exceptions;
 
 namespace User.Application
 {
@@ -16,11 +19,11 @@ namespace User.Application
         {
             _settings = settings.Value;
         }
-        public string GenerateToken(int userId, List<string> roles)
+        public string GenerateToken(string userId, List<string> roles)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+                new Claim(ClaimTypes.NameIdentifier, userId)
             };
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
@@ -47,6 +50,6 @@ namespace User.Application
 
     public interface IJwtTokenService
     {
-        string GenerateToken(int userId, List<string> roles);
+        string GenerateToken(string userId, List<string> roles);
     }
 }
