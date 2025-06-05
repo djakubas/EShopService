@@ -13,7 +13,7 @@ namespace User.Application.AutoMappers
     {
         public UserUpdateMappingProfile()
         {
-            CreateMap<UserModel, UserUpdateDto>().ForAllMembers(options => 
+            CreateMap<UserUpdateDto, UserModel>().ForAllMembers(options => 
                 options.Condition((source,destination,sourceMember) => 
                     sourceMember != null));
         }

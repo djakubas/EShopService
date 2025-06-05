@@ -28,6 +28,10 @@ namespace User.Domain.Seeders
                     new UserModel
                     {
                         UserName = "Client", PasswordHash = _passwordHasher.HashPassword(null!, "test") , Role = "Client"
+                    },
+                    new UserModel
+                    {
+                        UserName = "TestUser", PasswordHash = _passwordHasher.HashPassword(null!, "test") , Role = "Client"
                     }
                 };
 

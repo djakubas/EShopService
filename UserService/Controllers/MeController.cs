@@ -63,7 +63,7 @@ namespace UserService.Controllers
                 if (Guid.TryParse(userId, out var userIdGuid))
                 {
                     var user = await _usersRepository.GetUserAsync(userIdGuid);
-                    _mapper.Map(userUpdateBody, user); //TUTAJ MAPPING NIE DZIALA
+                    _mapper.Map(userUpdateBody, user);
                     var result = await _usersRepository.UpdateAsync(user);
 
                     var userDto = _mapper.Map<UserDto>(user);

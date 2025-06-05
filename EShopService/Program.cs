@@ -1,11 +1,18 @@
+using EShop.Application;
+using EShop.Domain.Repositories;
+using EShop.Domain.Seeders;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
+using EShop.Application.Services;
+using EShop.Domain;
+using Microsoft.EntityFrameworkCore;
+
 namespace EShopService
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +54,15 @@ namespace EShopService
                 options.AddPolicy("Client", policy => policy.RequireRole("Client"));
             });
 
-            
+            builder.Services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("TestDataBase"));
+
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+
+            builder.Services.AddScoped<ICreditCardService, CreditCardService>();
+            builder.Services.AddScoped<IEShopSeeder, EShopSeeder>();
+
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -64,6 +79,12 @@ namespace EShopService
                 app.UseSwaggerUI();
 
                 app.UseCors("allowAnyOriginAnyHeaderAnyMethod");
+                using (var scope = app.Services.CreateScope())
+                {
+                    var seeder = scope.ServiceProvider.GetRequiredService<IEShopSeeder>();
+                    await seeder.Seed();
+                    await seeder.CleanProductsTable();
+                }
             }
             
             
