@@ -1,16 +1,17 @@
 ﻿using Microsoft.Extensions.Options;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 
-namespace EShopService.Middleware
+namespace Infrastructure.Middleware
 {
     public class ServiceUnderMaintenanceMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly bool _maintenance = false;
-        public ServiceUnderMaintenanceMiddleware(RequestDelegate next)
+        private readonly bool _maintenance;
+        public ServiceUnderMaintenanceMiddleware(RequestDelegate next, bool maintenance)
         {
             _next = next;
-            //_maintenance = maintenance;
+            _maintenance = maintenance;
         }
 
         public async Task InvokeAsync(HttpContext context)

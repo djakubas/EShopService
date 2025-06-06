@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
-
-namespace EShopService.Middleware
+using Microsoft.AspNetCore.Http;
+namespace Infrastructure.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

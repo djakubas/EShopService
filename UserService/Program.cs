@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Cryptography;
 using User.Application.AutoMappers;
 using AutoMapper;
-
+using Infrastructure.Middleware;
 
 namespace UserService
 {
@@ -20,6 +20,10 @@ namespace UserService
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            //maintenance status
+            bool maintenance = builder.Configuration.GetValue<bool>("UnderMaintenance");
+            
             //JWT Token Auth config
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             builder.Services.Configure<JwtSettings>(jwtSettings);
@@ -105,6 +109,9 @@ namespace UserService
 
             var app = builder.Build();
 
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseMiddleware<ServiceUnderMaintenanceMiddleware>(maintenance);
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -123,6 +130,7 @@ namespace UserService
 
             app.UseHttpsRedirection();
 
+            app.UseMiddleware<PageNotFoundMiddleware>();
             app.MapControllers();
 
             app.Run();

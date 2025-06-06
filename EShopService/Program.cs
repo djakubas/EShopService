@@ -7,18 +7,20 @@ using System.Security.Cryptography;
 using EShop.Application.Services;
 using EShop.Domain;
 using Microsoft.EntityFrameworkCore;
-using EShopService.Middleware;
+using Infrastructure.Middleware;
 using Microsoft.Extensions.Options;
 
 namespace EShopService
 {
+    
     public class Program
     {
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
+            bool underMaintenance = builder.Configuration.GetValue<bool>("UnderMaintenance");
+
 
             // Add services to the container.
             builder.Services.AddCors(options => options.AddPolicy("allowAnyOriginAnyHeaderAnyMethod", policy =>
@@ -77,7 +79,7 @@ namespace EShopService
             var app = builder.Build();
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
-            app.UseMiddleware<ServiceUnderMaintenanceMiddleware>();
+            app.UseMiddleware<ServiceUnderMaintenanceMiddleware>(underMaintenance);
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
