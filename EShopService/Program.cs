@@ -7,6 +7,8 @@ using System.Security.Cryptography;
 using EShop.Application.Services;
 using EShop.Domain;
 using Microsoft.EntityFrameworkCore;
+using EShopService.Middleware;
+using Microsoft.Extensions.Options;
 
 namespace EShopService
 {
@@ -15,6 +17,8 @@ namespace EShopService
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            
 
             // Add services to the container.
             builder.Services.AddCors(options => options.AddPolicy("allowAnyOriginAnyHeaderAnyMethod", policy =>
@@ -61,7 +65,7 @@ namespace EShopService
 
             builder.Services.AddScoped<ICreditCardService, CreditCardService>();
             builder.Services.AddScoped<IEShopSeeder, EShopSeeder>();
-
+            
 
 
             builder.Services.AddControllers();
@@ -72,6 +76,8 @@ namespace EShopService
 
             var app = builder.Build();
 
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseMiddleware<ServiceUnderMaintenanceMiddleware>();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -79,24 +85,24 @@ namespace EShopService
                 app.UseSwaggerUI();
 
                 app.UseCors("allowAnyOriginAnyHeaderAnyMethod");
-                using (var scope = app.Services.CreateScope())
-                {
-                    var seeder = scope.ServiceProvider.GetRequiredService<IEShopSeeder>();
-                    await seeder.Seed();
-                    await seeder.CleanProductsTable();
-                }
+                //using (var scope = app.Services.CreateScope())
+                //{
+                //    var seeder = scope.ServiceProvider.GetRequiredService<IEShopSeeder>();
+                //    await seeder.Seed();
+                //    await seeder.CleanProductsTable();
+                //}
             }
             
-            
+            app.UseRouting();
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-
+            app.UseMiddleware<PageNotFoundMiddleware>();
             app.MapControllers();
 
+            
             app.Run();
-        }
+        } 
     }
 }

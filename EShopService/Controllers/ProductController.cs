@@ -13,9 +13,10 @@ namespace EShopService.Controllers
         // GET: api/<ProductController>
         [HttpGet]
         //[Authorize]
-        [Authorize(Roles = "Administrator,Employee,Client")]
+        //[Authorize(Roles = "Administrator,Employee,Client")]
         public IEnumerable<Product> Get()
         {
+            throw new Exception("error from controller");
             return Enumerable.Range(1, 5).Select(id => new Product
             {
                 Category = new Category { Name = $"Kategoria {id}" },
