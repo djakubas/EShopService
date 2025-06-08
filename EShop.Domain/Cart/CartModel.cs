@@ -11,8 +11,8 @@ namespace EShop.Domain.Cart
     public class CartModel
     {
         public int Id { get; set; }
-        IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
-        float? Price { get; set; }
-        float? Tax { get; set; }
+        public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
+        public decimal? Price { get; set; }
+        public decimal? Tax { get; set; }
     }
 }
