@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore.InMemory;
 using EShop.Domain.Models;
+using EShop.Domain.Cart;
+
 namespace EShop.Domain.Repositories
 {
     public class DataContext : DbContext
@@ -17,9 +19,8 @@ namespace EShop.Domain.Repositories
         //    //optionsBuilder.UseSqlServer("CONN STRING");
         //    //optionsBuilder.UseInMemoryDatabase("TestDataBase");
         //}
-
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-
+        public DbSet<CartModel> Carts { get; set; }
     }
 }

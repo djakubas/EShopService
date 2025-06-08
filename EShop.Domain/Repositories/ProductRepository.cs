@@ -20,7 +20,7 @@ namespace EShop.Domain.Repositories
         {
             return await _context.Products.ToListAsync();
         }
-        public async Task<Product> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
             return await _context.Products.Where(p => (p.Id == id)).FirstOrDefaultAsync();
         }
@@ -48,7 +48,7 @@ namespace EShop.Domain.Repositories
     public interface IProductRepository
     {
         Task<IEnumerable<Product>> GetAllAsync();
-        Task<Product> GetByIdAsync(int id);
+        Task<Product?> GetByIdAsync(int id);
         Task<Product> AddAsync(Product product);
         Task<Product> UpdateAsync(Product product);
         Task<Product> DeleteAsync(Product product);

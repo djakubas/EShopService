@@ -12,5 +12,8 @@ namespace User.Domain.Models
     public class UserModel : IdentityUser
     {
         public string Role { get; set; } = default!;
+        public string CartId { get; set; } = default!;
+ 
     }
+    
 }

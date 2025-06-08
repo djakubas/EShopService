@@ -22,7 +22,7 @@ namespace EShop.Application.Services
         {
             return await _productRepository.GetAllAsync();
         }
-        public async Task<Product> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
             return await _productRepository.GetByIdAsync(id);
         }
@@ -45,7 +45,7 @@ namespace EShop.Application.Services
     public interface IProductService
     {
         Task<IEnumerable<Product>> GetAllAsync();
-        Task<Product> GetByIdAsync(int id);
+        Task<Product?> GetByIdAsync(int id);
         Task<Product> AddAsync(Product product);
         Task<Product> UpdateAsync(Product product);
         //Task<Product> DeleteAsync(int id);
