@@ -365,3 +365,4 @@ FodyWeavers.xsd
 # Testing user service
 testUsers.html
 data/*
+wwwroot/

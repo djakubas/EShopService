@@ -21,7 +21,7 @@ namespace EShop.Domain.Repositories
         {
             return await _context.Carts.ToListAsync();
         }
-        public async Task<CartModel?> GetByIdAsync(int id)
+        public async Task<CartModel?> GetByIdAsync(Guid id)
         {
             return await _context.Carts.Where(c => (c.Id == id)).FirstOrDefaultAsync();
         }
@@ -47,7 +47,7 @@ namespace EShop.Domain.Repositories
     public interface ICartRepository
     {
         Task<IEnumerable<CartModel>> GetAllAsync();
-        Task<CartModel?> GetByIdAsync(int id);
+        Task<CartModel?> GetByIdAsync(Guid id);
         Task<CartModel> AddAsync(CartModel cart);
         Task<CartModel> UpdateAsync(CartModel cart);
         Task<CartModel> DeleteAsync(CartModel cart);

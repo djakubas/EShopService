@@ -19,16 +19,34 @@ namespace EShop.Domain.Seeders
                 var Products = new List<Product>
                 {
                     new Product
-                    {
-                        Id = 1,Name = "Laptop Lenovo ThinkPad X1",Ean = "1234567890123",Price = 5999.99m,Stock = 15,Sku = "LEN-X1-001",Category = new Category {Name = "Electronics" }
+                    {   
+                        Id = 1,
+                        Name = "Rower szosowy Giant Contend 3",
+                        Ean = "1234567890123",
+                        Price = 5999.99m,
+                        Stock = 10,
+                        Sku = "GIA-C3-001",
+                        Category = new Category { Name = "Bicycles" }
                     },
                     new Product
                     {
-                        Id = 2,Name = "Smartfon Samsung Galaxy S24",Ean = "2345678901234",Price = 4299.00m,Stock = 25,Sku = "SAM-S24-002",Category = new Category {Name = "Electronics" }
+                        Id = 2,
+                        Name = "Rower górski Trek Marlin 7",
+                        Ean = "2345678901234",
+                        Price = 4299.00m,
+                        Stock = 12,
+                        Sku = "TRE-M7-002",
+                        Category = new Category { Name = "Bicycles" }
                     },
                     new Product
                     {
-                        Id = 3,Name = "Fotel ergonomiczny ErgoChair",Ean = "3456789012345",Price = 1249.50m,Stock = 8,Sku = "ERG-CHR-003",Category = new Category {Name = "Office" }
+                        Id = 3,
+                        Name = "Kask rowerowy Kross Vento",
+                        Ean = "3456789012345",
+                        Price = 249.50m,
+                        Stock = 30,
+                        Sku = "KRO-VEN-003",
+                        Category = new Category { Name = "Accessories" }
                     }
                 };
 

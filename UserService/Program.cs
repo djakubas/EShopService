@@ -62,14 +62,14 @@ namespace UserService
                 options.AddPolicy("Client", policy => policy.RequireRole("Client"));
             });
             
-                        //for testing purposes
-            builder.Services.AddCors(options => options.AddPolicy("allowAnyOriginAnyHeaderAnyMethod", policy =>
-                {
-                    policy.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-                })
-            );
+            //for testing purposes
+            ////builder.Services.AddCors(options => options.AddPolicy("allowAnyOriginAnyHeaderAnyMethod", policy =>
+            ////    {
+            ////        policy.AllowAnyOrigin()
+            ////              .AllowAnyHeader()
+            ////              .AllowAnyMethod();
+            ////    })
+            ////);
 
             //Identity Options
             var identityOptionsSection = builder.Configuration.GetSection("IdentityOptions");
@@ -115,9 +115,10 @@ namespace UserService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseStaticFiles();
                 app.UseSwagger();
                 app.UseSwaggerUI();
-                app.UseCors("allowAnyOriginAnyHeaderAnyMethod");
+                //app.UseCors("allowAnyOriginAnyHeaderAnyMethod");
                 using (var scope = app.Services.CreateScope())
                 {
                     var seeder = scope.ServiceProvider.GetRequiredService<IUsersSeeder>();

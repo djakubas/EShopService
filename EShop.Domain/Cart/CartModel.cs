@@ -10,9 +10,9 @@ namespace EShop.Domain.Cart
 {
     public class CartModel
     {
-        public int Id { get; set; }
-        public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
-        public decimal? Price { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public List<Product> Products { get; set; } = new List<Product>();
+        public decimal? PriceTotal { get; set; }
         public decimal? Tax { get; set; }
     }
 }

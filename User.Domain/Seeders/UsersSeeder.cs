@@ -27,7 +27,7 @@ namespace User.Domain.Seeders
                     },
                     new UserModel
                     {
-                        UserName = "Client", PasswordHash = _passwordHasher.HashPassword(null!, "test") , Role = "Client"
+                        UserName = "Client", PasswordHash = _passwordHasher.HashPassword(null!, "test") , Role = "Client",
                     },
                     new UserModel
                     {
