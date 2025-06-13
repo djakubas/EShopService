@@ -59,7 +59,7 @@ namespace EShopService.Controllers
             {
                 var cart = await _cartService.CalculateCartAsync(cartId);
                 return Ok(cart);
-            }s
+            }
             catch (CartNotFoundException e )
             {
                 return NotFound(new { message = e.Message });
