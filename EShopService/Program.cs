@@ -9,6 +9,7 @@ using EShop.Domain;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Middleware;
 using Microsoft.Extensions.Options;
+using EShop.Application.AutoMappers;
 
 namespace EShopService
 {
@@ -59,10 +60,13 @@ namespace EShopService
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();
 
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.AddScoped<ICartService, CartService>();
+
             builder.Services.AddScoped<ICreditCardService, CreditCardService>();
             builder.Services.AddScoped<IEShopSeeder, EShopSeeder>();
-            
 
+            builder.Services.AddAutoMapper(typeof(ProductMappingProfile));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

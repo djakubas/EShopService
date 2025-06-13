@@ -9,9 +9,9 @@ using EShop.Domain.Models;
 
 namespace EShop.Application.AutoMappers
 {
-    public class ProducMappingProfile : Profile
+    public class ProductMappingProfile : Profile
     {
-        public ProducMappingProfile()
+        public ProductMappingProfile()
         {
             CreateMap<ProductDto, Product>();
         }

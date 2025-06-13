@@ -27,12 +27,11 @@ namespace EShop.Application.Services
             var cart = await _cartRepository.GetByIdAsync(cartId)
                 ?? throw new CartNotFoundException();
 
-            var ids = cart.Products.Select(p => p.Id).ToList();
-            var products = _productRepository.GetByIdsAsync(ids);
+            var products = _productRepository.GetByIdsAsync(cart.ProductsIds);
 
-            foreach(var product in cart.Products)
+            foreach(var product in cart.ProductsIds)
             {
-                //czy na pewno potrzebuje tutaj Produktu a nie tylko id produktu?
+                //czy w ogole potrzeba przeliczac to tutaj?
             }
             
             return cart;
@@ -40,27 +39,27 @@ namespace EShop.Application.Services
 
         public async Task<CartModel> AddItemToCartAsync(int productId, Guid cartId)
         {
-            var product = await _productRepository.GetByIdAsync(productId)
-                ?? throw new ProductNotFoundException();
-
             var cart = await _cartRepository.GetByIdAsync(cartId)
                 ?? throw new CartNotFoundException();
-
-            cart.Products.Append(product);
+            if (await  _productRepository.GetByIdAsync(productId) == null)
+                throw new ProductNotFoundException();
+            
+            cart.ProductsIds.Append(productId);
             await _cartRepository.UpdateAsync(cart);
             return cart;
         }
-
+       
         public async Task<CartModel> RemoveItemFromCartAsync(int productId,Guid cartId)
         {
             var cart = await _cartRepository.GetByIdAsync(cartId)
                 ?? throw new CartNotFoundException();
 
-            var item = cart.Products.FirstOrDefault(p => p.Id == productId)
-                ?? throw new ProductNotFoundException();
-
-            cart.Products.Remove(item);
-
+            if (!cart.ProductsIds.Contains(productId))
+            {
+                throw new ProductNotFoundException();
+            }
+            
+            cart.ProductsIds.Remove(productId);
             await _cartRepository.UpdateAsync(cart);
             return cart;
         }
@@ -69,7 +68,7 @@ namespace EShop.Application.Services
         {
             var cart = await _cartRepository.GetByIdAsync(cartId)
                 ?? throw new CartNotFoundException();
-            cart.Products.Clear();
+            cart.ProductsIds.Clear();
             await _cartRepository.UpdateAsync(cart);
             return cart;
         }

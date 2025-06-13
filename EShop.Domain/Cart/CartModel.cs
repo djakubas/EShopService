@@ -11,7 +11,7 @@ namespace EShop.Domain.Cart
     public class CartModel
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<int> ProductsIds { get; set; } = new List<int>();
         public decimal? PriceTotal { get; set; }
         public decimal? Tax { get; set; }
     }
