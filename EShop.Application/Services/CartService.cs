@@ -1,7 +1,7 @@
-﻿using EShop.Domain.Cart;
-using EShop.Domain.Exceptions.Cart;
+﻿using EShop.Domain.Exceptions.Cart;
 using EShop.Domain.Exceptions.Products;
 using EShop.Domain.Models;
+using EShop.Domain.Models.Cart;
 using EShop.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -22,53 +22,76 @@ namespace EShop.Application.Services
             _cartRepository = cartRepository;
             _productRepository = productRepository;
         }
-        public async Task<CartModel> CalculateCartAsync(Guid cartId)
+        public async Task<Cart> CalculateCartAsync(Guid cartId)
         {
             var cart = await _cartRepository.GetByIdAsync(cartId)
                 ?? throw new CartNotFoundException();
 
-            var products = _productRepository.GetByIdsAsync(cart.ProductsIds);
+            var products = await _productRepository.GetByIdsAsync(cart.Items.Select(i => i.Id).ToList());  
 
-            foreach(var product in cart.ProductsIds)
+            foreach(var product in cart.Items)
             {
                 //czy w ogole potrzeba przeliczac to tutaj?
             }
             
+            await _cartRepository.UpdateAsync(cart);
             return cart;
         }
 
-        public async Task<CartModel> AddItemToCartAsync(int productId, Guid cartId)
+        public async Task<Cart> AddItemToCartAsync(int productId, Guid cartId)
         {
             var cart = await _cartRepository.GetByIdAsync(cartId)
                 ?? throw new CartNotFoundException();
             if (await  _productRepository.GetByIdAsync(productId) == null)
                 throw new ProductNotFoundException();
-            
-            cart.ProductsIds.Append(productId);
+
+            var existingItem = cart.Items.FirstOrDefault(i => i.Id == productId);
+                if (existingItem == null)
+                {
+                cart.Items.Add(new CartItem
+                    {
+                        Id = productId,
+                        Quantity = 1
+                    });
+                }
+                else
+                {
+                    existingItem.Quantity++;
+                }
+
             await _cartRepository.UpdateAsync(cart);
             return cart;
         }
        
-        public async Task<CartModel> RemoveItemFromCartAsync(int productId,Guid cartId)
+        public async Task<Cart> RemoveItemFromCartAsync(int productId,Guid cartId)
         {
             var cart = await _cartRepository.GetByIdAsync(cartId)
                 ?? throw new CartNotFoundException();
 
-            if (!cart.ProductsIds.Contains(productId))
+            var existingItem = cart.Items.FirstOrDefault(i => i.Id == productId);
+            if (existingItem == null)
             {
                 throw new ProductNotFoundException();
             }
             
-            cart.ProductsIds.Remove(productId);
+            if (existingItem.Quantity == 1)
+            {
+                cart.Items.Remove(existingItem);
+            }
+            else
+            {
+                existingItem.Quantity--;
+            }
+
             await _cartRepository.UpdateAsync(cart);
             return cart;
         }
 
-        public async Task<CartModel> CleanCartAsync(int productId,Guid cartId)
+        public async Task<Cart> CleanCartAsync(int productId,Guid cartId)
         {
             var cart = await _cartRepository.GetByIdAsync(cartId)
                 ?? throw new CartNotFoundException();
-            cart.ProductsIds.Clear();
+            cart.Items.Clear();
             await _cartRepository.UpdateAsync(cart);
             return cart;
         }
@@ -77,9 +100,9 @@ namespace EShop.Application.Services
 
     public interface ICartService
     {
-        public Task<CartModel> CalculateCartAsync(Guid cartId);
-        public Task<CartModel> AddItemToCartAsync(int productId, Guid cartId);
-        public Task<CartModel> RemoveItemFromCartAsync(int productId, Guid cartId);
-        public Task<CartModel> CleanCartAsync(int productId, Guid cartId);
+        public Task<Cart> CalculateCartAsync(Guid cartId);
+        public Task<Cart> AddItemToCartAsync(int productId, Guid cartId);
+        public Task<Cart> RemoveItemFromCartAsync(int productId, Guid cartId);
+        public Task<Cart> CleanCartAsync(int productId, Guid cartId);
     }
 }

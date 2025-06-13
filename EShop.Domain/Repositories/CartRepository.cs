@@ -1,5 +1,5 @@
-﻿using EShop.Domain.Cart;
-using EShop.Domain.Models;
+﻿using EShop.Domain.Models;
+using EShop.Domain.Models.Cart;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,27 +17,27 @@ namespace EShop.Domain.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<CartModel>> GetAllAsync()
+        public async Task<IEnumerable<Cart>> GetAllAsync()
         {
             return await _context.Carts.ToListAsync();
         }
-        public async Task<CartModel?> GetByIdAsync(Guid id)
+        public async Task<Cart?> GetByIdAsync(Guid id)
         {
             return await _context.Carts.Where(c => (c.Id == id)).FirstOrDefaultAsync();
         }
-        public async Task<CartModel> AddAsync(CartModel cart)
+        public async Task<Cart> AddAsync(Cart cart)
         {
             _context.Carts.Add(cart);
             await _context.SaveChangesAsync();
             return cart;
         }
-        public async Task<CartModel> UpdateAsync(CartModel cart)
+        public async Task<Cart> UpdateAsync(Cart cart)
         {
             _context.Carts.Update(cart);
             await _context.SaveChangesAsync();
             return cart;
         }
-        public async Task<CartModel> DeleteAsync(CartModel cart)
+        public async Task<Cart> DeleteAsync(Cart cart)
         {
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync();
@@ -46,10 +46,10 @@ namespace EShop.Domain.Repositories
     }
     public interface ICartRepository
     {
-        Task<IEnumerable<CartModel>> GetAllAsync();
-        Task<CartModel?> GetByIdAsync(Guid id);
-        Task<CartModel> AddAsync(CartModel cart);
-        Task<CartModel> UpdateAsync(CartModel cart);
-        Task<CartModel> DeleteAsync(CartModel cart);
+        Task<IEnumerable<Cart>> GetAllAsync();
+        Task<Cart?> GetByIdAsync(Guid id);
+        Task<Cart> AddAsync(Cart cart);
+        Task<Cart> UpdateAsync(Cart cart);
+        Task<Cart> DeleteAsync(Cart cart);
     }
 }

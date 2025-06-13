@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EShop.Domain.Models;
+using EShop.Domain.Models.Products;
 
 namespace EShop.Application.Dto
 {

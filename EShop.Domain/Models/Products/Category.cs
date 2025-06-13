@@ -1,4 +1,4 @@
-﻿namespace EShop.Domain.Models
+﻿namespace EShop.Domain.Models.Products
 {
     public class Category
     {

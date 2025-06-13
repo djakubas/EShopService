@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore.InMemory;
-using EShop.Domain.Models;
-using EShop.Domain.Cart;
+using EShop.Domain.Models.Products;
+using EShop.Domain.Models.Cart;
 
 namespace EShop.Domain.Repositories
 {
@@ -21,6 +21,6 @@ namespace EShop.Domain.Repositories
         //}
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<CartModel> Carts { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace EShop.Domain.Models
+﻿namespace EShop.Domain.Models.Products
 {
     public class Product : BaseModel
     {
@@ -34,7 +34,7 @@
         /// <summary>
         /// Kategoria produktu
         /// </summary>
-        public Category? Category { get; set; }        
+        public Category? Category { get; set; }
 
     }
 }

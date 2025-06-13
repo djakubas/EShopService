@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EShop.Application.Dto;
-using EShop.Domain.Models;
+using EShop.Domain.Models.Products;
 
 namespace EShop.Application.AutoMappers
 {

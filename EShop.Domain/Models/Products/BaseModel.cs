@@ -1,7 +1,7 @@
-﻿namespace EShop.Domain.Models
+﻿namespace EShop.Domain.Models.Products
 {
     public abstract class BaseModel
-    {   
+    {
         /// <summary>
         /// Określenie aktywności produktu
         /// </summary>
