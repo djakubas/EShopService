@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EShop.Domain.Models.Products;
 
-
 namespace EShop.Domain.Seeders
 {
     public class EShopSeeder(DataContext context) : IEShopSeeder
