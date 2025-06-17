@@ -314,7 +314,7 @@ namespace EShop.Application.Tests
         }
 
         [Fact]
-        public async Task CleanCartAsync_ClearsAllItems()
+        public async Task CleanCartAsync_CartWithProducts_ClearsAllItems()
         {
             // Arrange
             var cartId = Guid.NewGuid();
