@@ -51,6 +51,7 @@ namespace EShop.Application.Services
 
             if (Regex.IsMatch(cardNumber, @"^4(\d{12}|\d{15}|\d{18})$"))
                 return CheckOnProvidersList("Visa");
+
             else if (Regex.IsMatch(cardNumber, @"^(5[1-5]\d{14}|2(2[2-9][1-9]|2[3-9]\d{2}|[3-6]\d{3}|7([01]\d{2}|20\d))\d{10})$"))
                 return CheckOnProvidersList("Mastercard");
 

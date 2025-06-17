@@ -17,11 +17,13 @@ namespace EShop.Application.Services
     {
         private readonly ICartRepository _cartRepository;
         private readonly IProductRepository _productRepository;
+
         public CartService(ICartRepository cartRepository, IProductRepository productRepository)
         {
             _cartRepository = cartRepository;
             _productRepository = productRepository;
         }
+
         public async Task<Cart> CalculateCartAsync(Guid cartId)
         {
             var cart = await _cartRepository.GetByIdAsync(cartId)
