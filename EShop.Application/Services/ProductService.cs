@@ -28,10 +28,12 @@ namespace EShop.Application.Services
         }
         public async Task<Product> AddAsync(Product product)
         {
+            if (product == null) throw new ArgumentNullException(nameof(product));
             return await _productRepository.AddAsync(product);
         }
         public async Task<Product> UpdateAsync(Product product)
         {
+            if (product == null) throw new ArgumentNullException(nameof(product));
             return await _productRepository.UpdateAsync(product);
         }
         //public async Task<Product> DeleteAsync(int id)

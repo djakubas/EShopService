@@ -43,8 +43,10 @@ namespace EShop.Application.Tests
                     new Product { Id = 1, Price = 10.0m },
                     new Product { Id = 2, Price = 20.0m }
                 });
+
             // Act
             var result = await cartService.CalculateCartAsync(cartId);
+           
             // Assert
             Assert.Equal(40.0m, result.PriceTotal);
         }
@@ -61,7 +63,7 @@ namespace EShop.Application.Tests
             var emptyCart = new Cart
             {
                 Id = cartId,
-                Items = new List<CartItem>() // Pusty koszyk
+                Items = new List<CartItem>()
             };
 
             cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync(emptyCart);
@@ -110,6 +112,7 @@ namespace EShop.Application.Tests
             var exception = await Assert.ThrowsAsync<ProductNotFoundException>(() => cartService.CalculateCartAsync(cartId));
             Assert.Equal("Product with ID 1 not found.", exception.Message);
         }
+
 
 
 
@@ -206,6 +209,7 @@ namespace EShop.Application.Tests
 
 
 
+
         // RemoveItemFromCartAsync tests
 
         [Fact]
@@ -291,6 +295,7 @@ namespace EShop.Application.Tests
             // Assert
             Assert.Equal(initialQuantity - 1, result.Items.FirstOrDefault(i => i.Id == productId)?.Quantity);
         }
+
 
 
 

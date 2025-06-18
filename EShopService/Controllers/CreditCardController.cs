@@ -8,9 +8,7 @@ namespace EShopService.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CreditCardController
-
     {
-
         private readonly ICreditCardService _creditCardService;
         public CreditCardController(ICreditCardService creditCardService)
         {
@@ -28,7 +26,5 @@ namespace EShopService.Controllers
         {
             return _creditCardService.GetCardType(cardNumber);
         }
-
-
     }
 }
