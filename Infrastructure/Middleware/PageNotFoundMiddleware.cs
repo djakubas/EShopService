@@ -22,9 +22,6 @@ namespace Infrastructure.Middleware
 
                 await context.Response.WriteAsync(result);
             }
-            
-            
-
         }
     }
 }

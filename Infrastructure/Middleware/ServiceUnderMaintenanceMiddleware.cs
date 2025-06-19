@@ -20,7 +20,7 @@ namespace Infrastructure.Middleware
             {
                 context.Response.StatusCode = 503;
                 context.Response.ContentType = "application/json";
-                var result = JsonSerializer.Serialize(new { message = "Service under mantenance" });
+                var result = JsonSerializer.Serialize(new { message = "Service under maintenance" });
 
                 await context.Response.WriteAsync(result);
             }
