@@ -36,7 +36,7 @@ public class ProductControllerIntegrationTests : IClassFixture<WebApplicationFac
                     var dbContextOptions = services
                         .SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<DataContext>));
 
-                    services.Remove(dbContextOptions);
+                    services.Remove(dbContextOptions!);
 
                     services
                         .AddDbContext<DataContext>(options => options.UseInMemoryDatabase("MyDBForTest"));
