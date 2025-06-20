@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EShop.Domain.Exceptions.Products;
 using EShop.Domain.Models.Products;
 using EShop.Domain.Repositories;
 using Microsoft.Identity.Client;
@@ -36,12 +37,13 @@ namespace EShop.Application.Services
             if (product == null) throw new ArgumentNullException(nameof(product));
             return await _productRepository.UpdateAsync(product);
         }
-        //public async Task<Product> DeleteAsync(int id)
-        //{
-        //    var p = await _productRepository.GetByIdAsync(id);
-        //    p.Deleted = true;
-        //    return await _productRepository.UpdateAsync(p);
-        //}
+        public async Task<Product> DeleteAsync(int id)
+        {
+            var p = await _productRepository.GetByIdAsync(id)
+                ?? throw new ProductNotFoundException($"Product with id {id} not found.");
+            p.Deleted = true;
+            return await _productRepository.UpdateAsync(p);
+        }
     }
 
     public interface IProductService
@@ -50,6 +52,6 @@ namespace EShop.Application.Services
         Task<Product?> GetByIdAsync(int id);
         Task<Product> AddAsync(Product product);
         Task<Product> UpdateAsync(Product product);
-        //Task<Product> DeleteAsync(int id);
+        Task<Product> DeleteAsync(int id);
     }
 }

@@ -60,13 +60,21 @@ namespace EShopService
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();
 
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+
             builder.Services.AddScoped<ICartRepository, CartRepository>();
             builder.Services.AddScoped<ICartService, CartService>();
 
             builder.Services.AddScoped<ICreditCardService, CreditCardService>();
             builder.Services.AddScoped<IEShopSeeder, EShopSeeder>();
 
-            builder.Services.AddAutoMapper(typeof(ProductMappingProfile));
+            builder.Services.AddAutoMapper(
+                typeof(ProductMappingProfile),
+                typeof(ProductUpdateMappingProfile),
+                typeof(CategoryMappingProfile),
+                typeof(CategoryUpdateMappingProfile)
+                );
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
