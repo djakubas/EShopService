@@ -7,8 +7,8 @@ namespace EShopService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CreditCardController
-    {
+    public class CreditCardController : ControllerBase
+    { 
         private readonly ICreditCardService _creditCardService;
         public CreditCardController(ICreditCardService creditCardService)
         {
@@ -16,15 +16,17 @@ namespace EShopService.Controllers
         }
 
         [HttpGet("Validate/{cardNumber}")]
-        public bool GetValidation(string cardNumber)
+        public IActionResult GetValidation(string cardNumber)
         {
-            return _creditCardService.ValidateCardNumber(cardNumber);
+            var result = _creditCardService.ValidateCardNumber(cardNumber);
+            return Ok(new {result});
         }
 
         [HttpGet("CardType/{cardNumber}")]
-        public string GetType(string cardNumber)
+        public IActionResult GetType(string cardNumber)
         {
-            return _creditCardService.GetCardType(cardNumber);
+            var result = _creditCardService.GetCardType(cardNumber);
+            return Ok(new { cardProvider = result });
         }
     }
 }
