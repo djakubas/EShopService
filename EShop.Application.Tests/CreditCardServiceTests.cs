@@ -46,20 +46,15 @@ namespace EShop.Application.Tests
             Assert.Throws<CardNumberTooShortException>(() => _creditCardService.ValidateCardNumber(cardNumber));
         }
 
-        [Theory]
-        [InlineData("6011123456789012")] // Discover Card
-        [InlineData("3530123456789012")] // JCB Card
-        [InlineData("30512345678901")] // Diners Club Card
-        [InlineData("5012345678901234")] // Maestro Card
-        public void ValidateCardNumber_WhenProviderNotSupported_ThrowsCardNumberInvalidException(string cardNumber)
+        [Fact]
+        public void ValidateCardNumber_WhenContainsNonDigit_ThrowsCardNumberInvalidException()
         {
             // Arrange
             var _creditCardService = new CreditCardService();
 
-            // Act & Assert 
-            Assert.Throws<CardNumberInvalidException>(() => _creditCardService.ValidateCardNumber(cardNumber));
+            // Act & Assert
+            Assert.Throws<CardNumberInvalidException>(() => _creditCardService.ValidateCardNumber("4532289052809181a"));
         }
-
 
 
 
@@ -88,6 +83,21 @@ namespace EShop.Application.Tests
 
             // Assert
             Assert.Equal(expected, result);
+        }
+
+
+        [Theory]
+        [InlineData("6011123456789012")] // Discover Card
+        [InlineData("3530123456789012")] // JCB Card
+        [InlineData("30512345678901")] // Diners Club Card
+        [InlineData("5012345678901234")] // Maestro Card
+        public void GetCardType_WhenProviderNotSupported_ThrowsCardNumberInvalidException(string cardNumber)
+        {
+            // Arrange
+            var _creditCardService = new CreditCardService();
+
+            // Act & Assert 
+            Assert.Throws<CardNumberInvalidException>(() => _creditCardService.ValidateCardNumber(cardNumber));
         }
     }
 }
