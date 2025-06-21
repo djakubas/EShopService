@@ -44,7 +44,6 @@ namespace User.Application
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-            
         }
     }
 

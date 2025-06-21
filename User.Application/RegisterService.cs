@@ -44,7 +44,6 @@ namespace User.Application
             var pwdValidationErrors = _passwordValidator.ValidatePassword(password);
             if (pwdValidationErrors.IsNullOrEmpty())
             {
-                
                 var hashedPassword = _passwordHasher.HashPassword(user, password);
                 user.PasswordHash = hashedPassword;
                 

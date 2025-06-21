@@ -11,7 +11,7 @@ namespace User.Application.Tests
     public class PasswordValidateServiceTests
     {
         [Fact]
-        public void CheckWrongPasswordAndReturnsAllErrors()
+        public void ValidatePassword_WithWrongPassword_ReturnsAllErrors()
         {
             var identityOptions = new IdentityOptions
             {
@@ -23,7 +23,6 @@ namespace User.Application.Tests
                     RequireDigit = true,
                     RequireUppercase = true,
                 }
-
             };
             IOptions<IdentityOptions> options = Options.Create(identityOptions);
             var service = new PasswordValidateService(options);
@@ -39,12 +38,10 @@ namespace User.Application.Tests
             Assert.Contains(result, e => e.Contains("non-alphanumeric"));
 
             Assert.Equal(5, result.Count);
-
-
         }
 
         [Fact]
-        public void CheckCorrectPasswordAndReturnNoError()
+        public void ValidatePassword_WithCorrectPassword_ReturnsNoErrors()
         {
             var identityOptions = new IdentityOptions
             {
@@ -63,7 +60,6 @@ namespace User.Application.Tests
             var result = service.ValidatePassword(password);
 
             Assert.Empty(result);
-            
         }
     }
 }
