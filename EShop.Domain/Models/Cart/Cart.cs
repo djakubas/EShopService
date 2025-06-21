@@ -12,7 +12,8 @@ namespace EShop.Domain.Models.Cart
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public List<CartItem> Items { get; set; } = new List<CartItem>();
-        public decimal? PriceTotal { get; set; }
-        public decimal? Tax { get; set; }
+        public decimal? PriceTotal { get; set; } = default;
+        public decimal? Tax { get; set; } = default;
+        public Guid? Owner { get; set; } = default;
     }
 }

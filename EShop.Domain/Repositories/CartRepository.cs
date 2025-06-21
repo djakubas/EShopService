@@ -17,6 +17,11 @@ namespace EShop.Domain.Repositories
         {
             _context = context;
         }
+
+        public async Task<Cart?> GetByUserIdAsync(Guid userId)
+        {
+            return await _context.Carts.Where(c => c.Owner == userId).FirstOrDefaultAsync();
+        }
         public async Task<IEnumerable<Cart>> GetAllAsync()
         {
             return await _context.Carts.ToListAsync();
@@ -46,6 +51,7 @@ namespace EShop.Domain.Repositories
     }
     public interface ICartRepository
     {
+        Task<Cart?> GetByUserIdAsync(Guid userId);
         Task<IEnumerable<Cart>> GetAllAsync();
         Task<Cart?> GetByIdAsync(Guid id);
         Task<Cart> AddAsync(Cart cart);

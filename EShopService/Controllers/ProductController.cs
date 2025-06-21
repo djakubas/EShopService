@@ -24,7 +24,7 @@ namespace EShopService.Controllers
         // GET: api/<ProductController>
         [HttpGet]
         //[Authorize]
-        [Authorize(Roles = "Administrator,Employee,Client")]
+        //[Authorize(Roles = "Administrator,Employee,Client")]
         public async Task<IActionResult> Get()
         {
             var result = await _productService.GetAllAsync();
@@ -38,7 +38,7 @@ namespace EShopService.Controllers
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator,Employee,Client")]
+        //[Authorize(Roles = "Administrator,Employee,Client")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _productService.GetByIdAsync(id);

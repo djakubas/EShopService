@@ -3,6 +3,9 @@ using EShop.Application.Services;
 using EShop.Domain.Exceptions;
 using EShop.Domain.Exceptions.Products;
 using EShop.Domain.Exceptions.Cart;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using EShop.Domain.Models.Cart;
 
 namespace EShopService.Controllers
 {
@@ -13,12 +16,28 @@ namespace EShopService.Controllers
         {
             _cartService = cartService;
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Administrator,Employee,Client")]
+        public async Task<IActionResult> GetCartId()
+        {
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? throw new UnauthorizedAccessException("User is not authenticated.");
+                var cartId = await _cartService.GetCartIdByUserIdAsync(Guid.Parse(userId));
+                return Ok(new { CartId = cartId });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+
         [HttpPost("AddItem")]
+        [Authorize(Roles = "Administrator,Employee,Client")]
         public async Task<IActionResult> AddItemToCart([FromBody] int productId, int quantity, Guid cartId)
         {
-            //dorobic quantity 
-            //do rozwazenia czy Guid nie brac przypadkiem z user context? 
-
             try
             {
                 var cart = await _cartService.AddItemToCartAsync(productId, cartId);
