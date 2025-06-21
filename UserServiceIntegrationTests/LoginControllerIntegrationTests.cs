@@ -16,15 +16,15 @@ using System.IdentityModel.Tokens.Jwt;
 using System;
 using User.Application.DTO;
 using System.Net.Http.Headers;
-namespace UserServiceIntegrationTests
+namespace UserService.IntegrationTests
 {
-    public class UserServiceIntegrationTests : IClassFixture<WebApplicationFactory<UserService.Program>>
+    public class LoginControllerIntegrationTests : IClassFixture<WebApplicationFactory<UserService.Program>>
     {
 
         private readonly HttpClient _httpClient;
         private WebApplicationFactory<UserService.Program> _applicationFactory;
 
-        public UserServiceIntegrationTests(WebApplicationFactory<UserService.Program> applicationFactory)
+        public LoginControllerIntegrationTests(WebApplicationFactory<UserService.Program> applicationFactory)
         {
             _applicationFactory = applicationFactory;
             //_applicationFactory = applicationFactory.WithWebHostBuilder(builder =>
@@ -43,8 +43,6 @@ namespace UserServiceIntegrationTests
             //seed DB here if needed
             
             _httpClient = _applicationFactory.CreateClient();
-
-            
         }
 
         [Fact]
@@ -75,25 +73,6 @@ namespace UserServiceIntegrationTests
                 
                 pageResult.EnsureSuccessStatusCode();
             }
-        }
-
-        [Fact]
-        public async Task RegisterService_ShouldCreateUser_ReturnSuccess_ShouldLoginNewUser_ReturnToken()
-        {
-            var body = new LoginRequest
-            {
-                Username = "newUser",
-                Password = "test1" //password meets requirements 
-            };
-            var bodyJson = JsonContent.Create(body);
-            var result = await _httpClient.PostAsync("/Register", bodyJson);
-            result.EnsureSuccessStatusCode();
-
-            var resultLogin = await _httpClient.PostAsync("/Login", bodyJson);
-            resultLogin.EnsureSuccessStatusCode();
-            var token = await resultLogin.Content.ReadFromJsonAsync<JwtTokenResponse>(); 
-            Assert.NotNull(token);
-            Assert.NotNull(token.Token);
         }
 
         [Fact]

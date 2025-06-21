@@ -13,12 +13,12 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace EShopService.IntegrationTests;
 
-public class CreditCardControllerIntegrationTest : IClassFixture<WebApplicationFactory<Program>>
+public class CreditCardControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient _client;
     private readonly WebApplicationFactory<Program> _factory;
 
-    public CreditCardControllerIntegrationTest(WebApplicationFactory<Program> factory)
+    public CreditCardControllerIntegrationTests(WebApplicationFactory<Program> factory)
     {
         _factory = factory
             .WithWebHostBuilder(builder =>
