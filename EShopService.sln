@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Application.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Domain", "EShop.Domain\EShop.Domain.csproj", "{87DF747D-B3FE-421A-96DE-E68CCA5EB44B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Domain.Tests", "EShop.Domain.Tests\EShop.Domain.Tests.csproj", "{73B26C00-4623-40D9-B06F-0660E2C403EA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "UserService\UserService.csproj", "{8C5D0C4F-E180-4D50-B62D-09CFD6C3B3DA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Domain", "User.Domain\User.Domain.csproj", "{9371EA80-FB3F-49A7-A2CB-1BC246CA84A2}"
@@ -59,10 +57,6 @@ Global
 		{87DF747D-B3FE-421A-96DE-E68CCA5EB44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87DF747D-B3FE-421A-96DE-E68CCA5EB44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87DF747D-B3FE-421A-96DE-E68CCA5EB44B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73B26C00-4623-40D9-B06F-0660E2C403EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73B26C00-4623-40D9-B06F-0660E2C403EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73B26C00-4623-40D9-B06F-0660E2C403EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73B26C00-4623-40D9-B06F-0660E2C403EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8C5D0C4F-E180-4D50-B62D-09CFD6C3B3DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8C5D0C4F-E180-4D50-B62D-09CFD6C3B3DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C5D0C4F-E180-4D50-B62D-09CFD6C3B3DA}.Release|Any CPU.ActiveCfg = Release|Any CPU

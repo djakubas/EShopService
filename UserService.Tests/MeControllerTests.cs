@@ -7,7 +7,6 @@ using User.Application.DTO;
 using User.Domain.Repositories;
 using UserService.Controllers;
 using User.Domain.Models;
-using User.Application.DTO;
 using User.Domain.Exceptions;
 
 namespace UserService.Tests;
