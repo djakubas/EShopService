@@ -1,4 +1,5 @@
 ﻿using EShop.Application.Services;
+using EShop.Domain.Exceptions.Products;
 using EShop.Domain.Models.Products;
 using EShop.Domain.Repositories;
 using Moq;
@@ -16,19 +17,19 @@ namespace EShop.Application.Tests
         // GetAllAsync tests
 
         [Fact]
-        public async Task GetAllAsync_ValidInput_ReturnsProducts()
+        public async Task GetAllAsync_ValidInput_ReturnsAllProducts()
         {
             // Arrange
             var productRepositoryMock = new Mock<IProductRepository>();
             var productService = new ProductService(productRepositoryMock.Object);
-            var products = new List<Product> { new Product { Id = 1, Price = 10.0m } };
+            var products = new List<Product> { new Product { Id = 1, Price = 10.0m }, new Product { Id = 2, Price = 20.0m } };
             productRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(products);
 
             // Act
             var result = await productService.GetAllAsync();
 
             // Assert
-            Assert.Equal(1, result.Count());
+            Assert.Equal(2, result.Count());
         }
 
         [Fact]
@@ -142,6 +143,47 @@ namespace EShop.Application.Tests
 
             // Act & Assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => productService.UpdateAsync(null));
+        }
+
+
+
+
+
+        // DeleteAsync tests
+
+        [Fact]
+        public async Task DeleteAsync_ValidId_MarksAsDeletedAndReturnsProduct()
+        {
+            // Arrange
+            var productId = 1;
+            var product = new Product { Id = productId, Name = "Laptop", Deleted = false };
+            var repoMock = new Mock<IProductRepository>();
+            repoMock.Setup(r => r.GetByIdAsync(productId)).ReturnsAsync(product);
+            repoMock.Setup(r => r.UpdateAsync(product)).ReturnsAsync(product);
+            var service = new ProductService(repoMock.Object);
+
+            // Act
+            var result = await service.DeleteAsync(productId);
+
+            // Assert
+            Assert.True(result.Deleted);
+            Assert.Same(product, result);
+            repoMock.Verify(r => r.GetByIdAsync(productId), Times.Once());
+            repoMock.Verify(r => r.UpdateAsync(product), Times.Once());
+        }
+
+        [Fact]
+        public async Task DeleteAsync_NonExistingId_ThrowsProductNotFoundException()
+        {
+            // Arrange
+            var productId = 1;
+            var repoMock = new Mock<IProductRepository>();
+            repoMock.Setup(r => r.GetByIdAsync(productId)).ReturnsAsync((Product?)null);
+            var service = new ProductService(repoMock.Object);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<ProductNotFoundException>(() => service.DeleteAsync(productId));
+            Assert.Equal($"Product with id {productId} not found.", exception.Message);
         }
 
     }

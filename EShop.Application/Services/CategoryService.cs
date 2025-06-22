@@ -42,7 +42,7 @@ namespace EShop.Application.Services
             await _categoryRepository.DeleteAsync(id);
         }
     }
-
+    
     public interface ICategoryService
     {
         Task<IEnumerable<Category>> GetAllAsync();

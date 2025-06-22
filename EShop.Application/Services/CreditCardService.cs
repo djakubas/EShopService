@@ -70,7 +70,7 @@ namespace EShop.Application.Services
             else if (Regex.IsMatch(cardNumber, @"^(50|5[6-9]|6\d)\d{10,17}$"))
                 return CheckOnProvidersList("Maestro");
 
-            return CheckOnProvidersList("Unknown");
+            else return CheckOnProvidersList("Unknown");
         }
         private string CheckOnProvidersList(string cardProvider)
         {

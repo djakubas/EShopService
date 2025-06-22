@@ -72,7 +72,6 @@ namespace EShop.Application.Tests
         [InlineData("5530016454538418", "Mastercard")]
         [InlineData("5551561443896215", "Mastercard")]
         [InlineData("5131208517986691", "Mastercard")]
-        [InlineData("00000000000000", "Unknown")]
         public void GetCardType_WhenGivenValidCardNumber_ReturnsCorrespondingProvider(string cardNumber, string expected)
         {
             // Arrange
@@ -91,13 +90,14 @@ namespace EShop.Application.Tests
         [InlineData("3530123456789012")] // JCB Card
         [InlineData("30512345678901")] // Diners Club Card
         [InlineData("5012345678901234")] // Maestro Card
+        [InlineData("00000000000000")] // Unknown Card
         public void GetCardType_WhenProviderNotSupported_ThrowsCardNumberInvalidException(string cardNumber)
         {
             // Arrange
             var _creditCardService = new CreditCardService();
 
             // Act & Assert 
-            Assert.Throws<CardNumberInvalidException>(() => _creditCardService.ValidateCardNumber(cardNumber));
+            Assert.Throws<CardNumberInvalidException>(() => _creditCardService.GetCardType(cardNumber));
         }
     }
 }
