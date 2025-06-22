@@ -117,7 +117,7 @@ public class CategoryServiceTests
         var service = new CategoryService(repoMock.Object);
 
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(() => service.AddAsync(null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => service.AddAsync(null!));
     }
 
 
@@ -150,7 +150,7 @@ public class CategoryServiceTests
         var service = new CategoryService(repoMock.Object);
 
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(() => service.UpdateAsync(null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => service.UpdateAsync(null!));
     }
 
 

@@ -66,6 +66,7 @@ namespace EShop.Application.Tests
             var result = await productService.GetByIdAsync(1);
 
             // Assert
+            Assert.NotNull(result);
             Assert.Equal(1, result.Id);
         }
 
@@ -75,7 +76,7 @@ namespace EShop.Application.Tests
             // Arrange
             var productRepositoryMock = new Mock<IProductRepository>();
             var productService = new ProductService(productRepositoryMock.Object);
-            productRepositoryMock.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync((Product)null);
+            productRepositoryMock.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync((Product)null!);
 
             // Act
             var result = await productService.GetByIdAsync(1);
@@ -109,7 +110,7 @@ namespace EShop.Application.Tests
             var productService = new ProductService(productRepositoryMock.Object);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => productService.AddAsync(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => productService.AddAsync(null!));
         }
 
 
@@ -142,7 +143,7 @@ namespace EShop.Application.Tests
             var productService = new ProductService(productRepositoryMock.Object);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => productService.UpdateAsync(null));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => productService.UpdateAsync(null!));
         }
 
 

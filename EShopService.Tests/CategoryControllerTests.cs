@@ -44,6 +44,7 @@ public class CategoryControllerTests
         var result = await _controller.Get() as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -57,6 +58,7 @@ public class CategoryControllerTests
         var result = await _controller.Get() as NotFoundObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(404, result.StatusCode);
     }
 
@@ -80,6 +82,7 @@ public class CategoryControllerTests
         var result = await _controller.Get(id) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -94,6 +97,7 @@ public class CategoryControllerTests
         var result = await _controller.Get(id) as NotFoundObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(404, result.StatusCode);
     }
     
@@ -116,6 +120,7 @@ public class CategoryControllerTests
         var result = await _controller.Post(categoryDto) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -123,7 +128,7 @@ public class CategoryControllerTests
     public async Task Post_NullCategory_ThrowsArgumentNullException()
     {
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(() => _controller.Post(null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _controller.Post(null!));
     }
 
 
@@ -146,6 +151,7 @@ public class CategoryControllerTests
         var result = await _controller.Put(id, categoryDto) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -153,7 +159,7 @@ public class CategoryControllerTests
     public async Task Put_NullCategory_ThrowsArgumentNullException()
     {
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(() => _controller.Put(Guid.NewGuid(), null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _controller.Put(Guid.NewGuid(), null!));
     }
 
 
@@ -173,6 +179,7 @@ public class CategoryControllerTests
         var result = await _controller.Delete(id) as NoContentResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(204, result.StatusCode);
     }
 
@@ -187,6 +194,7 @@ public class CategoryControllerTests
         var result = await _controller.Delete(id) as BadRequestObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(400, result.StatusCode);
     }
 }

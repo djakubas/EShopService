@@ -29,6 +29,7 @@ public class CartControllerTests
         var result = await controller.AddItemToCart(1, 1, cart.Id) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -44,6 +45,7 @@ public class CartControllerTests
         var result = await controller.AddItemToCart(1, 1, Guid.NewGuid()) as NotFoundObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(404, result.StatusCode);
     }
 
@@ -59,6 +61,7 @@ public class CartControllerTests
         var result = await controller.AddItemToCart(1, 1, Guid.NewGuid()) as NotFoundObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(404, result.StatusCode);
     }
 
@@ -83,6 +86,7 @@ public class CartControllerTests
         var result = await controller.RemoveItemFromCart(1, cart.Id) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -98,6 +102,7 @@ public class CartControllerTests
         var result = await controller.RemoveItemFromCart(1, Guid.NewGuid()) as NotFoundObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(404, result.StatusCode);
     }
 
@@ -113,6 +118,7 @@ public class CartControllerTests
         var result = await controller.RemoveItemFromCart(1, Guid.NewGuid()) as NotFoundObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(404, result.StatusCode);
     }
 
@@ -134,6 +140,7 @@ public class CartControllerTests
         var result = await controller.CalculateCart(cart.Id) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -149,6 +156,7 @@ public class CartControllerTests
         var result = await controller.CalculateCart(Guid.NewGuid()) as NotFoundObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(404, result.StatusCode);
     }
 }

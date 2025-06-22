@@ -33,8 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Tests", "Inf
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService_deprecated", "NotificationService\NotificationService_deprecated.csproj", "{049B01DC-D30C-49CC-B687-FE5372AE0F68}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationServices\NotificationService.csproj", "{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService.Domain", "..\NotificationService.Domain\NotificationService.Domain.csproj", "{BCEC3257-0801-452C-A5CF-3E7C9861E638}"
@@ -107,10 +105,6 @@ Global
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{049B01DC-D30C-49CC-B687-FE5372AE0F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{049B01DC-D30C-49CC-B687-FE5372AE0F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{049B01DC-D30C-49CC-B687-FE5372AE0F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{049B01DC-D30C-49CC-B687-FE5372AE0F68}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU

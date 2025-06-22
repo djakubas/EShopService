@@ -84,7 +84,7 @@ namespace EShop.Application.Tests
             var productRepositoryMock = new Mock<IProductRepository>();
             var cartService = new CartService(cartRepositoryMock.Object, productRepositoryMock.Object);
            
-            cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync((Cart)null);
+            cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync((Cart)null!);
             
             // Act & Assert
             await Assert.ThrowsAsync<CartNotFoundException>(() => cartService.CalculateCartAsync(cartId));
@@ -129,7 +129,7 @@ namespace EShop.Application.Tests
             var productRepositoryMock = new Mock<IProductRepository>();
             var cartService = new CartService(cartRepositoryMock.Object, productRepositoryMock.Object);
 
-            cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync((Cart)null);
+            cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync((Cart)null!);
 
             // Act & Assert
             await Assert.ThrowsAsync<CartNotFoundException>(() => cartService.AddItemToCartAsync(productId, cartId));
@@ -147,7 +147,7 @@ namespace EShop.Application.Tests
 
             var cart = new Cart { Id = cartId, Items = new List<CartItem>() };
             cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync(cart);
-            productRepositoryMock.Setup(repo => repo.GetByIdAsync(productId)).ReturnsAsync((Product)null);
+            productRepositoryMock.Setup(repo => repo.GetByIdAsync(productId)).ReturnsAsync((Product)null!);
 
             // Act & Assert
             await Assert.ThrowsAsync<ProductNotFoundException>(() => cartService.AddItemToCartAsync(productId, cartId));
@@ -222,7 +222,7 @@ namespace EShop.Application.Tests
             var productRepositoryMock = new Mock<IProductRepository>();
             var cartService = new CartService(cartRepositoryMock.Object, productRepositoryMock.Object);
 
-            cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync((Cart)null);
+            cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync((Cart)null!);
 
             // Act & Assert
             await Assert.ThrowsAsync<CartNotFoundException>(() => cartService.RemoveItemFromCartAsync(productId, cartId));
@@ -312,7 +312,7 @@ namespace EShop.Application.Tests
             var productRepositoryMock = new Mock<IProductRepository>();
             var cartService = new CartService(cartRepositoryMock.Object, productRepositoryMock.Object);
 
-            cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync((Cart)null);
+            cartRepositoryMock.Setup(repo => repo.GetByIdAsync(cartId)).ReturnsAsync((Cart)null!);
 
             // Act & Assert
             await Assert.ThrowsAsync<CartNotFoundException>(() => cartService.CleanCartAsync(productId, cartId));
