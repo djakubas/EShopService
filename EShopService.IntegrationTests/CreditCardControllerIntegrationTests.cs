@@ -65,12 +65,12 @@ public class CreditCardControllerIntegrationTests : IClassFixture<WebApplication
     // GetType Tests
 
     [Theory]
-    [InlineData("4532289052809181", "Visa", HttpStatusCode.OK)] // Valid Visa
-    [InlineData("5530016454538418", "Mastercard", HttpStatusCode.OK)] // Valid Mastercard
-    [InlineData("378523393817437", "American_Express", HttpStatusCode.OK)] // Valid American Express
-    [InlineData("00000000000000", "Unknown", HttpStatusCode.BadRequest)] // Unrecognized (not in enum)
-    [InlineData("6011123456789012", "Discover", HttpStatusCode.BadRequest)] // Discover (not in enum)
-    public async Task GetType_WhenGivenValidCardNumber_ReturnsOkStatusCode(string cardNumber, string expectedType, HttpStatusCode expectedStatus)
+    [InlineData("4532289052809181", HttpStatusCode.OK)] // Valid Visa
+    [InlineData("5530016454538418", HttpStatusCode.OK)] // Valid Mastercard
+    [InlineData("378523393817437", HttpStatusCode.OK)] // Valid American Express
+    [InlineData("00000000000000",  HttpStatusCode.BadRequest)] // Unrecognized (not in enum)
+    [InlineData("6011123456789012", HttpStatusCode.BadRequest)] // Discover (not in enum)
+    public async Task GetType_WhenGivenValidCardNumber_ReturnsOkStatusCode(string cardNumber, HttpStatusCode expectedStatus)
     {
         // Act
         var response = await _client.GetAsync($"/api/CreditCard/CardType/{cardNumber}");
