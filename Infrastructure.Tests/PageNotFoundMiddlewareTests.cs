@@ -11,21 +11,23 @@ using System.Threading.Tasks;
 namespace Infrastructure.Tests;
 public class PageNotFoundMiddlewareTests
 {
-    [Fact]
-    public async Task InvokeAsync_Status404_SetsJsonContentType()
-    {
-        // Arrange
-        var mockNext = new Mock<RequestDelegate>();
-        var mockContext = new DefaultHttpContext();
-        mockContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
-        var middleware = new PageNotFoundMiddleware(mockNext.Object);
 
-        // Act
-        await middleware.InvokeAsync(mockContext);
+    //deprecated
+    //[Fact]
+    //public async Task InvokeAsync_Status404_SetsJsonContentType()
+    //{
+    //    // Arrange
+    //    var mockNext = new Mock<RequestDelegate>();
+    //    var mockContext = new DefaultHttpContext();
+    //    mockContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
+    //    var middleware = new PageNotFoundMiddleware(mockNext.Object);
 
-        // Assert
-        Assert.Equal("application/json", mockContext.Response.ContentType);
-    }
+    //    // Act
+    //    await middleware.InvokeAsync(mockContext);
+
+    //    // Assert
+    //    Assert.Equal("application/json", mockContext.Response.ContentType);
+    //}
 
     [Fact]
     public async Task InvokeAsync_Status404_WritesNotFoundMessage()

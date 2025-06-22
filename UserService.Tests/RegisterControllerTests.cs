@@ -34,6 +34,7 @@ public class RegisterControllerTests
         var result = await _controller.Register(loginRequest) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -48,6 +49,7 @@ public class RegisterControllerTests
         var result = await _controller.Register(loginRequest) as BadRequestObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(400, result.StatusCode);
     }
 
@@ -62,6 +64,7 @@ public class RegisterControllerTests
         var result = await _controller.Register(loginRequest) as BadRequestObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(400, result.StatusCode);
     }
 }

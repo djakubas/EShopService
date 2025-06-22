@@ -38,6 +38,7 @@ public class LoginControllerTests
         var result = await _controller.Login(loginRequest) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -52,11 +53,12 @@ public class LoginControllerTests
         var result = await _controller.Login(loginRequest) as UnauthorizedObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(401, result.StatusCode);
     }
 
     [Fact]
-    public async Task AdminPage_AuthorizedAdmin_ReturnsOk()
+    public void AdminPage_AuthorizedAdmin_ReturnsOk()
     {
         // Arrange
         _controller.ControllerContext = new ControllerContext
@@ -68,11 +70,12 @@ public class LoginControllerTests
         var result = _controller.AdminPage() as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
     [Fact]
-    public async Task EmployeePage_AuthorizedEmployee_ReturnsOk()
+    public void EmployeePage_AuthorizedEmployee_ReturnsOk()
     {
         // Arrange
         _controller.ControllerContext = new ControllerContext
@@ -84,11 +87,12 @@ public class LoginControllerTests
         var result = _controller.EmployeePage() as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
     [Fact]
-    public async Task ClientPage_AuthorizedClient_ReturnsOk()
+    public void ClientPage_AuthorizedClient_ReturnsOk()
     {
         // Arrange
         _controller.ControllerContext = new ControllerContext
@@ -100,6 +104,7 @@ public class LoginControllerTests
         var result = _controller.ClientPage() as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 }

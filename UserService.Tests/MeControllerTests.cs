@@ -48,6 +48,7 @@ public class MeControllerTests
         var result = await _controller.Get() as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -64,6 +65,7 @@ public class MeControllerTests
         var result = await _controller.Get() as BadRequestObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(400, result.StatusCode);
     }
 
@@ -96,6 +98,7 @@ public class MeControllerTests
         var result = await _controller.UpdateUserDetails(updateDto) as OkObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(200, result.StatusCode);
     }
 
@@ -108,13 +111,14 @@ public class MeControllerTests
         {
             HttpContext = new DefaultHttpContext { User = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "invalid") })) }
         };
-        _usersRepoMock.Setup(r => r.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync((UserModel)null);
-        _mapperMock.Setup(m => m.Map(It.IsAny<UserUpdateDto>, It.IsAny<UserModel>())).Returns((UserModel)null);
+        _usersRepoMock.Setup(r => r.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync((UserModel)null!);
+        _mapperMock.Setup(m => m.Map(It.IsAny<UserUpdateDto>, It.IsAny<UserModel>())).Returns((UserModel)null!);
 
         // Act
         var result = await _controller.UpdateUserDetails(updateDto) as BadRequestObjectResult;
 
         // Assert
+        Assert.NotNull(result);
         Assert.Equal(400, result.StatusCode);
     }
 }

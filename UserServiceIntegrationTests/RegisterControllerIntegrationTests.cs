@@ -51,6 +51,7 @@ public class RegisterControllerIntegrationTests : IClassFixture<WebApplicationFa
         var resultLogin = await _httpClient.PostAsync("/Login", bodyJson);
         resultLogin.EnsureSuccessStatusCode();
         var token = await resultLogin.Content.ReadFromJsonAsync<JwtTokenResponse>();
+        Assert.NotNull(token);
         Assert.NotNull(token.Token);
     }
 }
