@@ -33,7 +33,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Tests", "Inf
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService\NotificationService.csproj", "{049B01DC-D30C-49CC-B687-FE5372AE0F68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService_deprecated", "NotificationService\NotificationService_deprecated.csproj", "{049B01DC-D30C-49CC-B687-FE5372AE0F68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationServices\NotificationService.csproj", "{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService.Domain", "..\NotificationService.Domain\NotificationService.Domain.csproj", "{BCEC3257-0801-452C-A5CF-3E7C9861E638}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService.Application", "..\NotificationService.Application\NotificationService.Application.csproj", "{99CCBF78-05B0-4247-879B-0AA67D05F7D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +111,18 @@ Global
 		{049B01DC-D30C-49CC-B687-FE5372AE0F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{049B01DC-D30C-49CC-B687-FE5372AE0F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{049B01DC-D30C-49CC-B687-FE5372AE0F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC5680C-C27C-4249-9B8D-A78B4A5C4A1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCEC3257-0801-452C-A5CF-3E7C9861E638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCEC3257-0801-452C-A5CF-3E7C9861E638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCEC3257-0801-452C-A5CF-3E7C9861E638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCEC3257-0801-452C-A5CF-3E7C9861E638}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99CCBF78-05B0-4247-879B-0AA67D05F7D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99CCBF78-05B0-4247-879B-0AA67D05F7D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99CCBF78-05B0-4247-879B-0AA67D05F7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99CCBF78-05B0-4247-879B-0AA67D05F7D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

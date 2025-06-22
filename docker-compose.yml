@@ -20,6 +20,13 @@ services:
       context: .
       dockerfile: UserService/Dockerfile
 
+  notificationservice:
+    image: ${DOCKER_REGISTRY-}notificationservice
+    environment:
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: 587
+      SMTP_USERNAME: email@email.com
+      SMTP_PASSWORD: password
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
