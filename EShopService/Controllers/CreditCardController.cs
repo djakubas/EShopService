@@ -18,15 +18,29 @@ namespace EShopService.Controllers
         [HttpGet("Validate/{cardNumber}")]
         public IActionResult GetValidation(string cardNumber)
         {
-            var result = _creditCardService.ValidateCardNumber(cardNumber);
-            return Ok(new {result});
+            try
+            {
+                var result = _creditCardService.ValidateCardNumber(cardNumber);
+                return Ok(new { result });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
         }
 
         [HttpGet("CardType/{cardNumber}")]
         public IActionResult GetType(string cardNumber)
         {
-            var result = _creditCardService.GetCardType(cardNumber);
-            return Ok(new { cardProvider = result });
+            try
+            {
+                var result = _creditCardService.GetCardType(cardNumber);
+                return Ok(new { cardProvider = result });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
         }
     }
 }

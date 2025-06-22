@@ -10,15 +10,19 @@ using EShop.Domain.Repositories;
 using EShop.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using EShopService.Controllers;
+using EShop.Domain.Exceptions.CreditCard;
+using EShopService;
 
 namespace EShopService.IntegrationTests;
 
-public class CreditCardControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+public class CreditCardControllerIntegrationTests : IClassFixture<WebApplicationFactory<EShopService.Program>>
 {
     private readonly HttpClient _client;
     private readonly WebApplicationFactory<Program> _factory;
 
-    public CreditCardControllerIntegrationTests(WebApplicationFactory<Program> factory)
+    public CreditCardControllerIntegrationTests(WebApplicationFactory<EShopService.Program> factory)
     {
         _factory = factory
             .WithWebHostBuilder(builder =>
@@ -41,11 +45,11 @@ public class CreditCardControllerIntegrationTests : IClassFixture<WebApplication
     // GetValidation Tests
 
     [Theory]
-    [InlineData("4532289052809181", true, HttpStatusCode.OK)] // Valid Visa
-    [InlineData("234564", false, HttpStatusCode.BadRequest)] // Too short (exception)
-    [InlineData("2345643456543456765434567654345676543", false, HttpStatusCode.BadRequest)] // Too long (exception)
-    [InlineData("4532289052809181a", false, HttpStatusCode.BadRequest)] // Non-numeric (exception)
-    public async Task GetValidation_WhenLuhnIsPassed_ReturnsOkStatusCode(string cardNumber, bool expectedResult, HttpStatusCode expectedStatus)
+    [InlineData("4532289052809181", HttpStatusCode.OK)] // Valid Visa
+    [InlineData("234564", HttpStatusCode.BadRequest)] // Too short (exception)
+    [InlineData("2345643456543456765434567654345676543", HttpStatusCode.BadRequest)] // Too long (exception)
+    [InlineData("4532289052809181a", HttpStatusCode.BadRequest)] // Non-numeric (exception)
+    public async Task GetValidation_WhenLuhnIsPassed_ReturnsOk(string cardNumber, HttpStatusCode expectedStatus)
     {
         // Act
         var response = await _client.GetAsync($"/api/CreditCard/Validate/{cardNumber}");
@@ -64,13 +68,12 @@ public class CreditCardControllerIntegrationTests : IClassFixture<WebApplication
     [InlineData("4532289052809181", "Visa", HttpStatusCode.OK)] // Valid Visa
     [InlineData("5530016454538418", "Mastercard", HttpStatusCode.OK)] // Valid Mastercard
     [InlineData("378523393817437", "American_Express", HttpStatusCode.OK)] // Valid American Express
-    [InlineData("00000000000000", "Unknown", HttpStatusCode.OK)] // Invalid (too short)
-    [InlineData("6011123456789012", "Discover", HttpStatusCode.OK)] // Discover (not in enum, returns string)
+    [InlineData("00000000000000", "Unknown", HttpStatusCode.BadRequest)] // Unrecognized (not in enum)
+    [InlineData("6011123456789012", "Discover", HttpStatusCode.BadRequest)] // Discover (not in enum)
     public async Task GetType_WhenGivenValidCardNumber_ReturnsOkStatusCode(string cardNumber, string expectedType, HttpStatusCode expectedStatus)
     {
         // Act
         var response = await _client.GetAsync($"/api/CreditCard/CardType/{cardNumber}");
-
         // Assert
         Assert.Equal(expectedStatus, response.StatusCode);
     }
