@@ -17,9 +17,9 @@ namespace Infrastructure.Middleware
 
             if (context.Response.StatusCode == 404)
             {
+                //context.Response.ContentType = "application/json";
                 var result = JsonSerializer.Serialize(new {message = "What you are looking for is not here"});
-                context.Response.ContentType = "application/json";
-
+               
                 await context.Response.WriteAsync(result);
             }
         }

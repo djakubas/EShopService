@@ -107,7 +107,7 @@ public class ProductControllerIntegrationTests : IClassFixture<WebApplicationFac
         var response = await _client.GetAsync($"/api/product/{nonExistingId}");
 
         // Assert
-        //Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);        
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);        
     }
 
 
