@@ -13,6 +13,7 @@ namespace NotificationService
                 {
                     services.AddHostedService<Worker>();
                     services.AddSingleton<IOrderNotificationService, OrderNotificationService>();
+                    services.AddSingleton<IEmailSendingService, EmailSendingService>();
                     services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
                 })
                 .Build();
